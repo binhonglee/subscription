@@ -1,0 +1,24 @@
+{
+    "db_name": "subscription.db",
+    "port": 8080,
+    "email": {
+        "address": "",
+        "username": "",
+        "password": "",
+        "port": 465,
+        "server": "",
+        "confirmation_content": "example/confirmation.html"
+    },
+    "subscribe": {
+        "success_template": "example/subscribe_success.html",
+        "error_template": "example/error.html"
+    },
+    "confirm": {
+        "success_template": "example/confirm_success.html",
+        "error_template": "example/error.html"
+    },
+    "unsubscribe": {
+        "success_template": "example/unsub_success.html",
+        "error_template": "example/error.html"
+    }
+}
