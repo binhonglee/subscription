@@ -169,6 +169,7 @@ def subscribe(email: str) -> str:
                 """,
                 (email, key, datetime.datetime.now().isoformat(), False)
             )
+            connection.commit()
             return ""
         else:
             return "failed to send email"
@@ -190,6 +191,7 @@ def confirm(key: str) -> str:
             SET confirmed = TRUE, key = '{2}'
             WHERE email = '{0}' and key = '{1}'
         """.format(''.join(email), key, str(uuid.uuid4())))
+        connection.commit()
         return ''
     else:
         return "invalid key"
@@ -202,6 +204,7 @@ def unsubscribe_key(key: str) -> str:
             DELETE FROM subscribers
             WHERE email = '%s';
         """ % email)
+        connection.commit()
         return ''
     else:
         return "invalid key"
@@ -216,6 +219,7 @@ def unsubscribe(email: str) -> str:
             DELETE FROM subscribers
             WHERE email = '%s';
         """ % email)
+        connection.commit()
 
 
 def isValidEmail(email: str) -> bool:
