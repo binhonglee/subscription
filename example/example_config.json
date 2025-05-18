@@ -10,6 +10,8 @@
         "confirmation_title": "Subscribing to BinHong's Newsletter",
         "confirmation_content": "example/confirmation.html"
     },
+    "template": "example/page_template.html",
+    "landing": "example/landing.html",
     "subscribe": {
         "success_template": "example/subscribe_success.html",
         "error_template": "example/error.html"

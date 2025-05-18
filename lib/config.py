@@ -6,12 +6,14 @@ class Config():
     def __init__(self):
         config = json.load(open("config.json", "r"))
         self.email_sender = Email(config["email"])
-        self.subscribe_success_response = open(config["subscribe"]["success_template"], "r").read()
-        self.subscribe_error_response = open(config["subscribe"]["error_template"], "r").read()
-        self.confirm_success_response = open(config["confirm"]["success_template"], "r").read()
-        self.confirm_error_response = open(config["confirm"]["error_template"], "r").read()
-        self.unsubscribe_success_response = open(config["unsubscribe"]["success_template"], "r").read()
-        self.unsubscribe_error_response = open(config["unsubscribe"]["error_template"], "r").read()
+        page_template = open(config["template"], "r").read()
+        self.landing = page_template.replace("{#CONTENT}", open(config["landing"], "r").read())
+        self.subscribe_success_response = page_template.replace("{#CONTENT}", open(config["subscribe"]["success_template"], "r").read())
+        self.subscribe_error_response = page_template.replace("{#CONTENT}", open(config["subscribe"]["error_template"], "r").read())
+        self.confirm_success_response = page_template.replace("{#CONTENT}", open(config["confirm"]["success_template"], "r").read())
+        self.confirm_error_response = page_template.replace("{#CONTENT}", open(config["confirm"]["error_template"], "r").read())
+        self.unsubscribe_success_response = page_template.replace("{#CONTENT}", open(config["unsubscribe"]["success_template"], "r").read())
+        self.unsubscribe_error_response = page_template.replace("{#CONTENT}", open(config["unsubscribe"]["error_template"], "r").read())
 
         self.db_name = "subscription.db"
         if "db_name" in config:

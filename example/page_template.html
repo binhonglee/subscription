@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link data-rh="true" rel="shortcut icon" href="https://binhong.me/images/profile.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=0.75">
+    <title>Newsletter - BinHong Lee</title>
+    <link rel="stylesheet" href="https://binhong.me/blog/style.css">
+    <link rel="stylesheet" href="https://binhong.me/about.css">
+    <link rel="stylesheet" href="https://binhong.me/fonts/fonts.css">
+  </head>
+  <style>
+    input {
+      padding: 12px;
+      width: 250px;
+      box-sizing: border-box;
+      border-radius: 12px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: var(--default-color);
+      background-color: var(--default-background);
+      color: var(--default-color);
+    }
+    
+    .dark_mode_toggle[open] + div input {
+      background-color: var(--dark-background);
+      border-color: var(--dark-color);
+      color: var(--dark-color);
+    }
+    
+    button {
+      padding: 12px;
+      margin: 0 12px;
+      border-radius: 12px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: var(--default-links);
+      background-color: var(--default-background);
+      color: var(--default-links);
+    }
+
+    .dark_mode_toggle[open] + div button {
+      border-color: var(--dark-links);
+      background-color: var(--dark-background);
+      color: var(--dark-links);
+    }
+
+    @media screen and (max-width: 450px) {
+      input {
+        width: 100%;
+      }
+
+      .subscribe {
+        margin: 12px 0;
+      }
+    }
+  </style>
+  <body>
+    <details class="dark_mode_toggle" role="button" open>
+      <summary>
+        <div class="content">
+          <div class="secondary_block">
+            <p class="name-title">Newsletter</p>
+          </div>
+        </div>
+      </summary>
+    </details>
+    <div class="wrapper">
+      <div class="content dropdown">
+        <button class="dropdown_toggle" aria-haspopup="true" aria-controls="dropdown_menu" id="dropdown_toggle">+</button>
+        <div class="header_links" id="dropdown_menu" aria-labelledby="dropdown_toggle" role="menu">
+          <a class="link" href="https://binhong.me/" role="menuitem">About</a>
+          <p>|</p>
+          <a class="link" href="https://binhong.me/blog" role="menuitem">Blog</a>
+        </div>
+      </div>
+      <div class="content">
+        <div class="primary_block bio">
+          <div class="primary_block top_block">
+            {#CONTENT}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://binhong.me/darkMode.js"></script>
+  </body>
+</html>

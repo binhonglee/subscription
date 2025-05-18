@@ -80,6 +80,8 @@ class Handler(BaseHTTPRequestHandler):
                             .replace("{#ERROR_MESSAGE}", error)
                         ).encode("utf-8")
                     )
+            case _:
+                self.wfile.write((config.landing).encode("utf-8"))
 
 
     def do_POST(self):
@@ -99,6 +101,7 @@ class Handler(BaseHTTPRequestHandler):
                     error = subscribe(email)
                 except Exception as e:
                     print(e)
+                    email = ""
                     error = "something went wrong"
 
                 if not error:
