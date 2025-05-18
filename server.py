@@ -11,7 +11,7 @@ from lib.config import Config
 
 
 config = Config()
-connection = sqlite3.connect(config.db_name, autocommit=True)
+connection = sqlite3.connect(config.db_name)
 cursor = connection.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS subscribers (

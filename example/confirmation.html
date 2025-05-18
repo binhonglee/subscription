@@ -1,13 +1,46 @@
+<!DOCTYPE html>
 <html>
     <style>
-        button {
-            padding: 10px 20px;
+        body {
+            background-color: #f0ede6;
+            color: #181a18;
+            padding: 20px;
+        }
+
+        .button {
+            border-radius: 12px;
+            border: solid;
+            border-width: 0.5px;
+            color: #1e681e;
+            display: inline-block;
+            padding: 12px 20px;
+        }
+
+        .button:hover {
+            border-radius: 16px;
+        }
+
+        .unsub {
+            margin: 0 12px;
+        }
+
+        .bottom_buttons {
+            padding: 12px 0;
         }
     </style>
     <body>
-        <h2>Confirm subscription</h2>
-        <a href="http://localhost:8080/confirm/{#KEY}" target="_blank" rel=”noopener noreferrer”>
-            <button>Confirm</button>
-        </a>
+        <h1>BinHong's Newsletter - Confirm Subscription</h1>
+        <p>
+            To enroll onto BinHong's newsletter, please click on the "Confirm" button below. If you did not
+            attempt to enroll onto BinHong's newsletter, please tap on the "Unsubscribe" button below.
+        </p>
+        <div class="bottom_buttons">
+            <a href="https://binhong.me/newsletter/confirm/{#KEY}" target="_blank" rel=”noopener noreferrer”>
+                <div class="button">Confirm</div>
+            </a>
+            <a href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>
+                <div class="button unsub">Unsubscribe</div>
+            </a>
+        </div>
     </body>
 </html>

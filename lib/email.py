@@ -10,7 +10,7 @@ class Email():
         self.password = config["password"]
         self.port = config["port"]
         self.server = config["server"]
-        self.confirmation_title = "Confirm email subscription"
+        self.confirmation_title = config["confirmation_title"]
         self.confirmation_content = open(config["confirmation_content"], 'r').read()
 
 

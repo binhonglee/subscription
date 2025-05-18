@@ -1,5 +1,43 @@
-<html>
-    <body>
-        <h2>Confirmation email sent to {#EMAIL_INPUT}</h2>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link data-rh="true" rel="shortcut icon" href="https://binhong.me/images/profile.png" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=0.75">
+    <title>Subscribe - BinHong Lee's Blog</title>
+    <link rel="stylesheet" href="https://binhong.me/blog/style.css">
+    <link rel="stylesheet" href="https://binhong.me/about.css">
+    <link rel="stylesheet" href="https://binhong.me/fonts/fonts.css">
+  </head>
+  <body>
+    <details class="dark_mode_toggle" role="button" open>
+      <summary>
+        <div class="content">
+          <div class="secondary_block">
+            <p class="name-title">Newsletter</p>
+          </div>
+        </div>
+      </summary>
+    </details>
+    <div class="wrapper">
+      <div class="content dropdown">
+        <button class="dropdown_toggle" aria-haspopup="true" aria-controls="dropdown_menu" id="dropdown_toggle">+</button>
+        <div class="header_links" id="dropdown_menu" aria-labelledby="dropdown_toggle" role="menu">
+          <a class="link" href="https://binhong.me/" role="menuitem">About</a>
+          <p>|</p>
+          <a class="link" href="https://binhong.me/blog" role="menuitem">Blog</a>
+        </div>
+      </div>
+      <div class="content">
+        <div class="primary_block bio">
+          <div class="primary_block top_block">
+            <p>
+              Confirmation email sent to {#EMAIL_INPUT}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="https://binhong.me/darkMode.js"></script>
+  </body>
 </html>
