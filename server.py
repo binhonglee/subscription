@@ -191,9 +191,9 @@ def confirm(key: str) -> str:
     if email:
         cursor.execute("""
             UPDATE subscribers
-            SET confirmed = TRUE, key = '{2}'
+            SET confirmed = TRUE
             WHERE email = '{0}' and key = '{1}'
-        """.format(''.join(email), key, str(uuid.uuid4())))
+        """.format(''.join(email), key))
         connection.commit()
         return ''
     else:

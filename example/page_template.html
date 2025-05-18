@@ -11,8 +11,6 @@
   </head>
   <style>
     input {
-      padding: 12px;
-      width: 250px;
       box-sizing: border-box;
       border-radius: 12px;
       border-style: solid;
@@ -20,6 +18,14 @@
       border-color: var(--default-color);
       background-color: var(--default-background);
       color: var(--default-color);
+      font-family: Vollkorn;
+      font-size: 100%;
+      padding: 12px;
+      width: 300px;
+    }
+
+    input:focus {
+      border-width: 3px;
     }
     
     .dark_mode_toggle[open] + div input {
@@ -29,14 +35,21 @@
     }
     
     button {
-      padding: 12px;
-      margin: 0 12px;
       border-radius: 12px;
       border-style: solid;
       border-width: 1px;
       border-color: var(--default-links);
       background-color: var(--default-background);
       color: var(--default-links);
+      cursor: pointer;
+      font-family: Vollkorn;
+      font-size: 100%;
+      margin: 0 12px;
+      padding: 12px;
+    }
+
+    button:hover {
+      border-width: 3px;
     }
 
     .dark_mode_toggle[open] + div button {
@@ -45,7 +58,13 @@
       color: var(--dark-links);
     }
 
-    @media screen and (max-width: 450px) {
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 520px) {
       input {
         width: 100%;
       }
@@ -66,21 +85,38 @@
       </summary>
     </details>
     <div class="wrapper">
-      <div class="content dropdown">
-        <button class="dropdown_toggle" aria-haspopup="true" aria-controls="dropdown_menu" id="dropdown_toggle">+</button>
-        <div class="header_links" id="dropdown_menu" aria-labelledby="dropdown_toggle" role="menu">
-          <a class="link" href="https://binhong.me/" role="menuitem">About</a>
-          <p>|</p>
-          <a class="link" href="https://binhong.me/blog" role="menuitem">Blog</a>
+      <div>
+        <div class="content dropdown">
+          <button class="dropdown_toggle" aria-haspopup="true" aria-controls="dropdown_menu" id="dropdown_toggle">+</button>
+          <div class="header_links" id="dropdown_menu" aria-labelledby="dropdown_toggle" role="menu">
+            <a class="link" href="https://binhong.me/" role="menuitem">About</a>
+            <p>|</p>
+            <a class="link" href="https://binhong.me/blog" role="menuitem">Blog</a>
+          </div>
         </div>
-      </div>
-      <div class="content">
-        <div class="primary_block bio">
-          <div class="primary_block top_block">
-            {#CONTENT}
+        <div class="content">
+          <div class="primary_block bio">
+            <div class="primary_block top_block">
+              {#CONTENT}
+            </div>
           </div>
         </div>
       </div>
+      <footer class="content" style="max-width: 100%;">
+        <div class="footer">
+          <div class="row">
+            <p>Fonts:</p>
+            <a href="http://vollkorn-typeface.com/" rel="noopener" target="_blank" class="name">Vollkorn</a>,
+            <a href="https://rubjo.github.io/victor-mono/" rel="noopener" target="_blank" class="name">Victor Mono</a>
+          </div>
+          <div class="row">
+            <a href="https://github.com/binhonglee/subscription" rel="noopener" target="_blank" class="name">Source (GitHub)</a>
+          </div>
+          <div class="row">
+            <p>&copy; 2025 <a href="https://binhong.me" class="name">BinHong Lee</a></p>
+          </div>
+        </div>
+      </footer>
     </div>
     <script type="text/javascript" src="https://binhong.me/darkMode.js"></script>
   </body>

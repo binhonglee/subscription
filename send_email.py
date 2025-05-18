@@ -4,7 +4,7 @@ import sqlite3
 
 
 config = Config()
-connection = sqlite3.connect(config.db_name, autocommit=True)
+connection = sqlite3.connect(config.db_name)
 cursor = connection.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS subscribers (
@@ -17,7 +17,7 @@ cursor.execute("""
 connection.commit()
 
 
-emails = cursor.execute("SELECT email, key FROM subscribers;")
+emails = cursor.execute("SELECT email, key FROM subscribers WHERE confirmed = TRUE;")
 for row in emails:
     new_content_config = json.load(open("new_content.json", "r"))
     config.email_sender.send_email(

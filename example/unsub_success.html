@@ -1,3 +1,7 @@
-            <p>
-              {#EMAIL_INPUT} unsubscribed successfully!
-            </p>
+            <p>{#EMAIL_INPUT} unsubscribed successfully!</p>
+            <br />
+            <p>Unintentionally unsubscribed? You can resubscribe below!</p>
+            <form action="https://binhong.me/newsletter/subscribe" method="post">
+                <input type="email" name="email" placeholder="email@domain.com" value="{#EMAIL_INPUT}"/>
+                <button type="submit" name="submit" class="subscribe">Subscribe</button>
+            </form>

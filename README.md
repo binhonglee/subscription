@@ -4,5 +4,5 @@ This is a simple subscription service where everything is stored in a sqlite DB 
 
 ## Requirement
 
-- python3
+- python3 (3.10+)
 - sqlite
