@@ -18,6 +18,7 @@ cursor.execute("""
         email TEXT UNIQUE PRIMARY KEY,
         key TEXT,
         started TEXT,
+        source_ip TEXT,
         confirmed BOOLEAN
     );
 """)
@@ -99,29 +100,26 @@ class Handler(BaseHTTPRequestHandler):
         match path:
             case "/subscribe":
                 try:
-                    email = post_data["email"][0]
-                    error = subscribe(email)
-                except Exception as e:
-                    print("post_subscribe - ", e)
                     email = ""
+                    if "email" in post_data and len(post_data["email"]) > 0:
+                        email = post_data["email"][0]
+                    error = subscribe(email, self.headers.get('X-Real-IP'))
+                except Exception as e:
+                    print("post_subscribe - ", e, email)
                     error = "something went wrong"
 
-                if not error:
-                    self.wfile.write(
-                        (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
-                            .encode("utf-8")
-                    )
-                else:
-                    self.wfile.write(
-                        (config.subscribe_error_response
-                            .replace("{#EMAIL_INPUT}", email)
-                            .replace("{#ERROR_MESSAGE}", error)
-                        ).encode("utf-8")
-                    )
+                self.wfile.write(
+                    (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
+                        .encode("utf-8")
+                )
             case "/confirm":
                 try:
-                    email = post_data["email"][0]
-                    key = post_data["key"][0]
+                    email = ""
+                    if "email" in post_data and len(post_data["email"]) > 0:
+                        email = post_data["email"][0]
+                    key = ""
+                    if "key" in post_data and len(post_data["key"]) > 0:
+                        key = post_data["key"][0]
                     error = confirm(key)
                 except Exception as e:
                     print("post_confirm - ", e)
@@ -141,7 +139,12 @@ class Handler(BaseHTTPRequestHandler):
                     )
             case "/unsubscribe":
                 try:
-                    email = post_data["email"][0]
+                    email = ""
+                    if "email" in post_data and len(post_data["email"]) > 0:
+                        email = post_data["email"][0]
+                    key = ""
+                    if "key" in post_data and len(post_data["key"]) > 0:
+                        key = post_data["key"][0]
                     error = unsubscribe(email)
                 except Exception as e:
                     print("post_unsubscribe - ", e)
@@ -161,24 +164,26 @@ class Handler(BaseHTTPRequestHandler):
                     )
 
 
-def subscribe(email: str) -> str:
+def subscribe(email: str, source_ip: str) -> str:
     if not isValidEmail(email):
+        print("post_subscribe (invalid email) - ", email)
         return "email is invalid"
 
     if cursor.execute("SELECT 1 FROM subscribers WHERE email = '%s';" % email).fetchone():
-        return "email already subscribed"
+        return ""
     else:
         key = str(uuid.uuid4())
         if config.email_sender.send_confirmation_email(email, key):
             cursor.execute("""
-                    INSERT INTO subscribers (email, key, started, confirmed)
-                    VALUES (?, ?, ?, ?);
+                    INSERT INTO subscribers (email, key, started, source_ip, confirmed)
+                    VALUES (?, ?, ?, ?, ?);
                 """,
-                (email, key, datetime.datetime.now().isoformat(), False)
+                (email, key, datetime.datetime.now().isoformat(), source_ip, False)
             )
             connection.commit()
             return ""
         else:
+            print("post_subscribe (failed to send) - ", email)
             return "failed to send email"
 
 
