@@ -1,58 +1,42 @@
 <!DOCTYPE html>
 <html>
     <style>
-        body {
-            background-color: #f0ede6;
-            color: #181a18;
-            padding: 20px;
-        }
-
-        h1, h2, h3 {
-            text-align: center;
-        }
-
-        a .button {
-            border-radius: 12px;
-            border: solid;
-            border-width: 0.5px;
-            color: #1e681e;
-            padding: 12px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         .button:hover {
-            border-radius: 16px;
-        }
-
-        a {
-            color: #1e681e;
+            border-width: 2px;
         }
     </style>
-    <body>
-        <h1>The Art of Posting</h1>
-        <h2>It&#39;s both self-promotion and communication</h2>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px;">
+        <h1 style="text-align: center;">BinHong's Newsletter - Building a Simple Newsletter Service</h1>
+        <h2 style="text-align: center;">Just a DB with some HTMLs</h2>
         <div class="post_content">
             <p>
-                This piece is specifically more about Meta&rsquo;s <em>unique</em> culture of
-                &ldquo;posting&rdquo; about things but I imagine it can be a useful reference
-                on communication in general. Many people loathe this process and complains
-                about how it&rsquo;s just a lot of &ldquo;self-promotion&rdquo; and while
-                there&rsquo;s definitely some truth to it, it&rsquo;s also a valuable
-                communication avenue that you can leverage to your advantage. As we will
-                explore further below, <em>posting</em> by itself is more of a bonus as the
-                post will still require actual substance (which is <em>your work</em> lol).
+                When I had the idea on the series about
+                <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/">The Opinionated Engineer</a>, I
+                figured maybe that&rsquo;s something worth setting up a newsletter service over. That said, after some
+                consideration, I just thought that I didn&rsquo;t need anything too complex and decided to roll my own
+                because &ldquo;how hard could it be?&rdquo;. As far as I can tell, I think it&rsquo;s working fine so
+                far(?) and took me around one whole day to put the whole thing together from my couch. You can find all
+                of it&rsquo;s source code <a style="color: #1e681e;" href="https://github.com/binhonglee/subscription">here on GitHub</a>.
             </p>
-            <h3>. . .</h3>
-            <a href="https://binhong.me/blog/2025-05-16-art-of-posting/" target="_blank" rel=”noopener noreferrer”>
-                <div class="button">Read the rest in the blog!</div>
-            </a>
+            <h2>Existing newsletter services</h2>
+            <p>
+                Aside from Substack, pretty much all other services provides it with a &ldquo;freemium&rdquo; model
+                where you are charged based on the number of subscribers (regardless if they are paid). Admittedly, I
+                doubt my newsletter would get to that point (I try to not take myself too seriously lol) but I also
+                didn&rsquo;t need most of the things those services are providing. Not to take anything away from them,
+                they all seem really useful if someone is doing that for a living, but I mostly write for fun and as a
+                way to do some knowledge preservation (future self-reference) with the sharing part mostly being a bonus.
+            </p>
+            <p>As for Substack, I didn&rsquo;t look too deep into things and while they don&rsquo;t have the best of
+                reputation, their product seem to fit my use case best where I won&rsquo;t have to pay anything ever
+                unless I started having paid subscribers. That said, I thought I didn&rsquo;t need something as fancy but
+                just something simple that goes with my personal blog.
+            </p>
+            <h3 style="text-align: center;">. . .</h3>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-05-21-building-a-simple-newsletter-service/" target="_blank" rel=”noopener noreferrer”><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; padding: 12px 20px; text-align: center; text-decoration: none; font-weight: bold;">Read the rest in the blog!</div></a>
         </div>
         <p>
-            <a href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>
-                Unsubscribe
-            </a>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>Unsubscribe</a>
         </p>
     </body>
 </html>

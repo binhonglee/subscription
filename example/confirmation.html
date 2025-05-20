@@ -1,45 +1,24 @@
 <!DOCTYPE html>
 <html>
     <style>
-        body {
-            background-color: #f0ede6;
-            color: #181a18;
-            padding: 20px;
-        }
-
-        .button {
-            border-radius: 12px;
-            border: solid;
-            border-width: 0.5px;
-            color: #1e681e;
-            display: inline-block;
-            padding: 12px 20px;
-        }
-
         .button:hover {
-            border-radius: 16px;
-        }
-
-        .unsub {
-            margin: 0 12px;
-        }
-
-        .bottom_buttons {
-            padding: 12px 0;
+            border-width: 2px;
+            font-weight: bold;
         }
     </style>
-    <body>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px;">
         <h1>BinHong's Newsletter - Confirm Subscription</h1>
+        <p>Welcome to BinHong's newsletter! Please click on "Confirm" below to begin receiving newsletters.</p>
+        <h2>What to expect?</h2>
         <p>
-            Welcome to BinHong's newsletter! Please click on "Confirm" below to begin receiving newsletters.
+            I'll send an issue every time there's a new piece released in the blog. You might observe in the blog that
+            I haven't been the most consistent <i>creator</i> so I can't promise consistent updates but I'll promise
+            to keep it to 2 issues (emails) per week at most. Ideally I'll also add more interesting / fun stuff aside
+            from just my own writings in the future but no promises!
         </p>
-        <div class="bottom_buttons">
-            <a href="https://binhong.me/newsletter/confirm/{#KEY}" target="_blank" rel=”noopener noreferrer”>
-                <div class="button">Confirm</div>
-            </a>
-            <a href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>
-                <div class="button unsub">Unsubscribe</div>
-            </a>
+        <div style="padding: 12px 0;">
+            <a href="https://binhong.me/newsletter/confirm/{#KEY}" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; display: inline-block; padding: 12px 20px; margin: 0;">Confirm</div></a>
+            <a href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; display: inline-block; padding: 12px 20px; margin: 0 12px;">Unsubscribe</div></a>
         </div>
     </body>
 </html>
