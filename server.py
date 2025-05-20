@@ -43,6 +43,7 @@ class Handler(BaseHTTPRequestHandler):
                     else:
                         error = confirm(key)
                 except Exception as e:
+                    print("get_confirm - ", e)
                     error = "something went wrong"
 
                 if not error:
@@ -66,6 +67,7 @@ class Handler(BaseHTTPRequestHandler):
                     else:
                         error = unsubscribe_key(key)
                 except Exception as e:
+                    print("get_unsubscribe - ", e)
                     error = "something went wrong"
 
                 if not error:
@@ -100,7 +102,7 @@ class Handler(BaseHTTPRequestHandler):
                     email = post_data["email"][0]
                     error = subscribe(email)
                 except Exception as e:
-                    print(e)
+                    print("post_subscribe - ", e)
                     email = ""
                     error = "something went wrong"
 
@@ -122,6 +124,7 @@ class Handler(BaseHTTPRequestHandler):
                     key = post_data["key"][0]
                     error = confirm(key)
                 except Exception as e:
+                    print("post_confirm - ", e)
                     error = "something went wrong"
 
                 if not error:
@@ -140,7 +143,8 @@ class Handler(BaseHTTPRequestHandler):
                 try:
                     email = post_data["email"][0]
                     error = unsubscribe(email)
-                except Exception:
+                except Exception as e:
+                    print("post_unsubscribe - ", e)
                     error = "something went wrong"
 
                 if not error:
