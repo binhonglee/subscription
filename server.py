@@ -5,9 +5,11 @@ import json
 import re
 import sqlite3
 import sys
+import time
 import traceback
 import uuid
 from lib.config import Config
+from lib.bad_ip import BadIP
 
 
 config = Config()
@@ -23,6 +25,7 @@ cursor.execute("""
     );
 """)
 connection.commit()
+bad_ip = BadIP()
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -33,8 +36,11 @@ class Handler(BaseHTTPRequestHandler):
 
         paths = urlparse(self.path).path.split("/")
         error = ""
+        print("GET", paths, "-", self.headers.get('X-Real-IP'))
 
         match paths[1]:
+            case "subscribe":
+                self.wfile.write((config.landing).encode("utf-8"))
             case "confirm":
                 try:
                     key = paths[2]
@@ -73,8 +79,10 @@ class Handler(BaseHTTPRequestHandler):
 
                 if not error:
                     self.wfile.write(
-                        (config.unsubscribe_success_response.replace("{#EMAIL_INPUT}", email))
-                            .encode("utf-8")
+                        (config.unsubscribe_success_response
+                            .replace("{#EMAIL_INPUT}", email)
+                            .replace("{#SECRET}", config.secret)
+                        ).encode("utf-8")
                     )
                 else:
                     self.wfile.write(
@@ -96,19 +104,15 @@ class Handler(BaseHTTPRequestHandler):
 
         path = urlparse(self.path).path
         error = ""
+        print("POST", path, "-", self.headers.get('X-Real-IP'), "-", post_data)
 
         match path:
             case "/subscribe":
-                print(post_data)
                 if "secret" not in post_data or len(post_data["secret"]) != 1 or post_data["secret"][0] != config.secret:
                     email = ""
                     if "email" in post_data and len(post_data["email"]) > 0:
                         email = post_data["email"][0]
-                    with open("bad_ip", "a") as file:
-                        file.write(email + " - ")
-                        file.write(self.headers.get('X-Real-IP') or "")
-                        file.write("\n")
-                        file.close()
+                    bad_ip.new_bad(self.headers.get('X-Real-IP') or "")
                     
                     self.wfile.write(
                         (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
@@ -181,6 +185,9 @@ class Handler(BaseHTTPRequestHandler):
                             .replace("{#ERROR_MESSAGE}", error)
                         ).encode("utf-8")
                     )
+            case _:
+                bad_ip.new_bad(email, self.headers.get('X-Real-IP') or "")
+                self.wfile.write((config.landing).encode("utf-8"))
 
 
 def subscribe(email: str, source_ip: str) -> str:
@@ -192,7 +199,10 @@ def subscribe(email: str, source_ip: str) -> str:
         return ""
     else:
         key = str(uuid.uuid4())
-        if config.email_sender.send_confirmation_email(email, key):
+        time.sleep(5)
+        if bad_ip.is_bad(source_ip):
+            return ""
+        elif config.email_sender.send_confirmation_email(email, key):
             cursor.execute("""
                     INSERT INTO subscribers (email, key, started, source_ip, confirmed)
                     VALUES (?, ?, ?, ?, ?);
@@ -209,9 +219,9 @@ def subscribe(email: str, source_ip: str) -> str:
 def email_from_key(key: str) -> str:
     email = cursor.execute("SELECT email FROM subscribers WHERE key = '%s';" % key).fetchone()
     if email:
-        return ''.join(email)
+        return "".join(email)
     else:
-        return ''
+        return ""
 
 
 def confirm(key: str) -> str:
@@ -221,9 +231,9 @@ def confirm(key: str) -> str:
             UPDATE subscribers
             SET confirmed = TRUE
             WHERE email = '{0}' and key = '{1}'
-        """.format(''.join(email), key))
+        """.format("".join(email), key))
         connection.commit()
-        return ''
+        return ""
     else:
         return "invalid key"
 
