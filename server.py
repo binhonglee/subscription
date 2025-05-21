@@ -169,8 +169,10 @@ class Handler(BaseHTTPRequestHandler):
 
                 if not error:
                     self.wfile.write(
-                        (config.unsubscribe_success_response.replace("{#EMAIL_INPUT}", email))
-                            .encode("utf-8")
+                        (config.unsubscribe_success_response
+                            .replace("{#EMAIL_INPUT}", email)
+                            .replace("{#SECRET}", config.secret)
+                        ).encode("utf-8")
                     )
                 else:
                     self.wfile.write(
