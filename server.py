@@ -84,7 +84,7 @@ class Handler(BaseHTTPRequestHandler):
                         ).encode("utf-8")
                     )
             case _:
-                self.wfile.write((config.landing.replace("{#SECRET}", config.secret)).encode("utf-8"))
+                self.wfile.write((config.landing).encode("utf-8"))
 
 
     def do_POST(self):

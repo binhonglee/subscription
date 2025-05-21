@@ -8,7 +8,7 @@ class Config():
         self.secret = config["secret"]
         self.email_sender = Email(config["email"])
         page_template = open(config["template"], "r").read()
-        self.landing = page_template.replace("{#CONTENT}", open(config["landing"], "r").read())
+        self.landing = open(config["landing"], "r").read()
         self.subscribe_success_response = page_template.replace("{#CONTENT}", open(config["subscribe"]["success_template"], "r").read())
         self.subscribe_error_response = page_template.replace("{#CONTENT}", open(config["subscribe"]["error_template"], "r").read())
         self.confirm_success_response = page_template.replace("{#CONTENT}", open(config["confirm"]["success_template"], "r").read())
