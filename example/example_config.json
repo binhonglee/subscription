@@ -10,6 +10,7 @@
         "confirmation_title": "Subscribing to BinHong's Newsletter",
         "confirmation_content": "example/confirmation.html"
     },
+    "secret": "",
     "template": "example/page_template.html",
     "landing": "example/landing.html",
     "subscribe": {

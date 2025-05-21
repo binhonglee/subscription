@@ -5,6 +5,7 @@ from lib.email import Email
 class Config():
     def __init__(self):
         config = json.load(open("config.json", "r"))
+        self.secret = config["secret"]
         self.email_sender = Email(config["email"])
         page_template = open(config["template"], "r").read()
         self.landing = page_template.replace("{#CONTENT}", open(config["landing"], "r").read())

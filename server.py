@@ -84,7 +84,7 @@ class Handler(BaseHTTPRequestHandler):
                         ).encode("utf-8")
                     )
             case _:
-                self.wfile.write((config.landing).encode("utf-8"))
+                self.wfile.write((config.landing.replace("{#SECRET}", config.secret)).encode("utf-8"))
 
 
     def do_POST(self):
@@ -99,6 +99,23 @@ class Handler(BaseHTTPRequestHandler):
 
         match path:
             case "/subscribe":
+                print(post_data)
+                if "secret" not in post_data or len(post_data["secret"]) != 1 or post_data["secret"][0] != config.secret:
+                    email = ""
+                    if "email" in post_data and len(post_data["email"]) > 0:
+                        email = post_data["email"][0]
+                    with open("bad_ip", "a") as file:
+                        file.write(email + " - ")
+                        file.write(self.headers.get('X-Real-IP') or "")
+                        file.write("\n")
+                        file.close()
+                    
+                    self.wfile.write(
+                        (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
+                            .encode("utf-8")
+                    )
+                    return
+
                 try:
                     email = ""
                     if "email" in post_data and len(post_data["email"]) > 0:
