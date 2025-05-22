@@ -6,27 +6,36 @@
         }
     </style>
     <body style="background-color: #f0ede6; color: #181a18; padding: 20px;">
-        <h1 style="text-align: center;">BinHong's Newsletter - Building a Simple Newsletter Service</h1>
-        <h2 style="text-align: center;">Just a DB with some HTMLs</h2>
+        <h1 style="text-align: center;">BinHong's Newsletter - Code Review Culture</h1>
+        <h2 style="text-align: center;">Review today or debug tomorrow</h2>
         <div class="post_content">
+            <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
+                <p>
+                    Ask a programmer to review 10 lines of code, he&rsquo;ll find 10 issues. Ask him to do 500 lines and he&rsquo;ll say it looks good.
+                    - <a href="https://x.com/girayozil/status/306836785739210752">@girayozil</a>
+                </p>
+            </div>
             <p>
-                When I had the idea on the series about
-                <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/">The Opinionated Engineer</a>, I
-                figured maybe that&rsquo;s something worth setting up a newsletter service over. That said, after some
-                consideration, I just thought that I didn&rsquo;t need anything too complex and decided to roll my own
-                because &ldquo;how hard could it be?&rdquo;. As far as I can tell, I think it&rsquo;s working fine so
-                far(?) and took me around one whole day to put the whole thing together from my couch. You can find all
-                of it&rsquo;s source code <a style="color: #1e681e;" href="https://github.com/binhonglee/subscription">here on GitHub</a>.
-            </p>
-            <h2>Existing newsletter services</h2>
-            <p>
-                Aside from Substack, pretty much all other services provide it with a "freemium" model where you are charged based on the number of subscribers (regardless if they are paid). Admittedly, I doubt my newsletter would get to that point (I try to not take myself too seriously lol) but I also didn't need most of the things those services are providing. Not to take anything away from them, they all seem really useful if someone is doing that for a living, but I mostly write for fun and as a way to do some knowledge preservation (future self-reference) with the sharing part mostly being a bonus.
+                Code review is a really subjective thing where each team or even individual runs things very differently. However, a bad code review process
+                can lead to bad code smells and unnecessary tech debt (just ask all the vibe coders out there 🫣). I will try my best to share my <em>rather
+                opinionated</em> takes while explaining the reasoning behind each of them.
             </p>
             <p>
-                As for Substack, I didn't look too deep into things and while they don't have the best of reputation, their product seems to fit my use case best where I won't have to pay anything ever unless I started having paid subscribers. That said, I thought I didn't need something as fancy but just something simple that goes with my personal blog.
+                <em>
+                    This is part of a series <a href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/">(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <h2>Overly prescriptive formatters</h2>
+            <p>
+                I&rsquo;m highly supportive of having a preset of an overly prescriptive formatter. It doesn&rsquo;t matter if it&rsquo;s spaces vs tabs, 2
+                spaces vs 4 spaces, curly braces on the same line or newline; as long as you have a formatter that keeps it consistent. This cuts down on all
+                the unnecessary time reviewing and fixing code formatting while still being easy to read and scan through. Make them as strict as possible,
+                ideally 100% reproducible where every line of code only has one way it can be formatted. Again, it doesn&rsquo;t matter which style you pick
+                but just pick something and stick with it, it&rsquo;s all about consistency here.
             </p>
             <h3 style="text-align: center;">. . .</h3>
-            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-05-21-building-a-simple-newsletter-service/" target="_blank" rel=”noopener noreferrer”><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; padding: 12px 20px; text-align: center; text-decoration: none; font-weight: bold;">Read the rest in the blog!</div></a>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-05-23-code-review-culture/" target="_blank" rel=”noopener noreferrer”><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; padding: 12px 20px; text-align: center; text-decoration: none; font-weight: bold;">Read the rest in the blog!</div></a>
         </div>
         <p>
             <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>Unsubscribe</a>
