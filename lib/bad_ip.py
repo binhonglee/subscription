@@ -18,7 +18,7 @@ class BadIP():
         if email in self.bad_email:
             self.new_bad(ip)
         if ip in self.bad_ip:
-            self.new_bad(email)
+            self.new_bad_email(email)
         return email in self.bad_email or ip in self.bad_ip
 
 

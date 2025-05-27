@@ -10,6 +10,7 @@ import traceback
 import uuid
 from lib.config import Config
 from lib.bad_ip import BadIP
+from lib.secret import Secret
 
 
 config = Config()
@@ -26,12 +27,15 @@ cursor.execute("""
 """)
 connection.commit()
 bad_ip = BadIP()
+secret = Secret()
 
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
+        secret.new_secret()
         self.send_response(200)
         self.send_header("Content-type", "text/html")
+        # self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
 
         paths = urlparse(self.path).path.split("/")
@@ -39,6 +43,8 @@ class Handler(BaseHTTPRequestHandler):
         print("GET", paths, "-", self.headers.get('X-Real-IP'))
 
         match paths[1]:
+            case "secret":
+                self.wfile.write(secret.get_secret().encode("utf-8"))
             case "subscribe":
                 self.wfile.write((config.landing).encode("utf-8"))
             case "confirm":
@@ -81,7 +87,7 @@ class Handler(BaseHTTPRequestHandler):
                     self.wfile.write(
                         (config.unsubscribe_success_response
                             .replace("{#EMAIL_INPUT}", email)
-                            .replace("{#SECRET}", config.secret)
+                            .replace("{#SECRET}", secret.get_secret())
                         ).encode("utf-8")
                     )
                 else:
@@ -96,6 +102,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
     def do_POST(self):
+        secret.new_secret()
         content_length = int(self.headers["Content-Length"])
         post_data = parse_qs(self.rfile.read(content_length).decode("utf-8"))
         self.send_response(200)
@@ -108,12 +115,22 @@ class Handler(BaseHTTPRequestHandler):
 
         match path:
             case "/subscribe":
-                if "secret" not in post_data or len(post_data["secret"]) != 1 or post_data["secret"][0] != config.secret:
+                if "secret" not in post_data or len(post_data["secret"]) != 1:
                     email = ""
                     if "email" in post_data and len(post_data["email"]) > 0:
                         email = post_data["email"][0]
                     new_bad_ip(self.headers.get('X-Real-IP') or "")
                     
+                    self.wfile.write(
+                        (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
+                            .encode("utf-8")
+                    )
+                    return
+
+                if not secret.is_valid(post_data["secret"][0]):
+                    email = ""
+                    if "email" in post_data and len(post_data["email"]) > 0:
+                        email = post_data["email"][0]
                     self.wfile.write(
                         (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
                             .encode("utf-8")
@@ -175,7 +192,7 @@ class Handler(BaseHTTPRequestHandler):
                     self.wfile.write(
                         (config.unsubscribe_success_response
                             .replace("{#EMAIL_INPUT}", email)
-                            .replace("{#SECRET}", config.secret)
+                            .replace("{#SECRET}", secret.get_secret())
                         ).encode("utf-8")
                     )
                 else:
@@ -191,16 +208,18 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def subscribe(email: str, source_ip: str) -> str:
-    if not isValidEmail(email):
+    if not is_valid_email(email):
         print("post_subscribe (invalid email) - ", email)
         return "email is invalid"
 
     if cursor.execute("SELECT 1 FROM subscribers WHERE email = '%s';" % email).fetchone():
+        print("post subscribe (email exist) - ", email)
         return ""
     else:
         key = str(uuid.uuid4())
         time.sleep(5)
         if bad_ip.is_bad(email, source_ip):
+            print("post subscribe (bad_ip) - ", email)
             return ""
         elif config.email_sender.send_confirmation_email(email, key):
             cursor.execute("""
@@ -210,6 +229,7 @@ def subscribe(email: str, source_ip: str) -> str:
                 (email, key, datetime.datetime.now().isoformat(), source_ip, False)
             )
             connection.commit()
+            print('\033[92m' + "New Subscriber: " + email + '\033[0m')
             return ""
         else:
             print("post_subscribe (failed to send) - ", email)
@@ -252,7 +272,7 @@ def unsubscribe_key(key: str) -> str:
 
 
 def unsubscribe(email: str) -> str:
-    if not isValidEmail(email):
+    if not is_valid_email(email):
         return "email is invalid"
 
     if cursor.execute("SELECT 1 FROM subscribers WHERE email = '%s';" % email).fetchone():
@@ -275,7 +295,7 @@ def new_bad_ip(ip: str) -> str:
     connection.commit()
 
 
-def isValidEmail(email: str) -> bool:
+def is_valid_email(email: str) -> bool:
     return re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email)
 
 

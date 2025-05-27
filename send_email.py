@@ -22,7 +22,7 @@ emails = cursor.execute("SELECT email, key, source_ip FROM subscribers WHERE con
 new_content_config = json.load(open("new_content.json", "r"))
 new_content_body = open(new_content_config["content_html"], "r").read()
 for row in emails:
-    if row[2] is not None and bad_ip.is_bad(row[2]):
+    if row[2] is not None and bad_ip.is_bad("", row[2]):
         print("Email sending skipped for " + row[0])
     else:
         # config.email_sender.send_email(
