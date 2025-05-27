@@ -25,9 +25,9 @@ for row in emails:
     if row[2] is not None and bad_ip.is_bad(row[2]):
         print("Email sending skipped for " + row[0])
     else:
-        config.email_sender.send_email(
-            row[0],
-            new_content_config["title"],
-            new_content_body.replace("{#KEY}", row[1]),
-        )
+        # config.email_sender.send_email(
+        #     row[0],
+        #     new_content_config["title"],
+        #     new_content_body.replace("{#KEY}", row[1]),
+        # )
         print("Email sent to " + row[0])

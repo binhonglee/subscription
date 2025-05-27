@@ -112,7 +112,7 @@ class Handler(BaseHTTPRequestHandler):
                     email = ""
                     if "email" in post_data and len(post_data["email"]) > 0:
                         email = post_data["email"][0]
-                    bad_ip.new_bad(self.headers.get('X-Real-IP') or "")
+                    new_bad_ip(self.headers.get('X-Real-IP') or "")
                     
                     self.wfile.write(
                         (config.subscribe_success_response.replace("{#EMAIL_INPUT}", email))
@@ -186,7 +186,7 @@ class Handler(BaseHTTPRequestHandler):
                         ).encode("utf-8")
                     )
             case _:
-                bad_ip.new_bad(email, self.headers.get('X-Real-IP') or "")
+                new_bad_ip(self.headers.get('X-Real-IP') or "")
                 self.wfile.write((config.landing).encode("utf-8"))
 
 
@@ -200,7 +200,7 @@ def subscribe(email: str, source_ip: str) -> str:
     else:
         key = str(uuid.uuid4())
         time.sleep(5)
-        if bad_ip.is_bad(source_ip):
+        if bad_ip.is_bad(email, source_ip):
             return ""
         elif config.email_sender.send_confirmation_email(email, key):
             cursor.execute("""
@@ -261,6 +261,18 @@ def unsubscribe(email: str) -> str:
             WHERE email = '%s';
         """ % email)
         connection.commit()
+
+
+def new_bad_ip(ip: str) -> str:
+    bad_ip.new_bad(ip)
+    emails = cursor.execute("SELECT email FROM subscribers WHERE source_ip = '%s';" % ip)
+    for row in emails:
+        bad_ip.new_bad_email(row[0])
+    cursor.execute("""
+        DELETE FROM subscribers
+        WHERE source_ip = '%s';
+    """ % ip)
+    connection.commit()
 
 
 def isValidEmail(email: str) -> bool:
