@@ -6,19 +6,21 @@
         }
     </style>
     <body style="background-color: #f0ede6; color: #181a18; padding: 20px;">
-        <h1 style="text-align: center;">BinHong's Newsletter - Code Review Culture</h1>
-        <h2 style="text-align: center;">Review today or debug tomorrow</h2>
+        <h1 style="text-align: center;">BinHong's Newsletter - No Blame SEV (Incident) Culture</h1>
+        <h2 style="text-align: center;">Less finger-pointing, more preventions</h2>
         <div class="post_content">
-            <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
+            <!-- <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
                 <p>
                     Ask a programmer to review 10 lines of code, he&rsquo;ll find 10 issues. Ask him to do 500 lines and he&rsquo;ll say it looks good.
                     - <a href="https://x.com/girayozil/status/306836785739210752">@girayozil</a>
                 </p>
-            </div>
+            </div> -->
             <p>
-                Code review is a really subjective thing where each team or even individual runs things very differently. However, a bad code review process
-                can lead to bad code smells and unnecessary tech debt (just ask all the vibe coders out there 🫣). I will try my best to share my <em>rather
-                opinionated</em> takes while explaining the reasoning behind each of them.
+                Every time there&rsquo;s a major outage at Meta, the first question I get from friends and family is usually
+                <em>&ldquo;did they fire the person who caused it?&rdquo;</em> which is where I have to explain this concept
+                of <strong>No Blame SEV Culture</strong>. Especially for an outage so big that a significant number of users
+                are affected, the <em>individual</em> causing it likely does not have ill intent and there are likely multiple
+                different processes and systems that failed along the way to get us here in the first place.
             </p>
             <p>
                 <em>
@@ -26,16 +28,20 @@
                     share my strong opinions on engineering practices.
                 </em>
             </p>
-            <h2>Overly prescriptive formatters</h2>
+            <h2>Process over People</h2>
             <p>
-                I&rsquo;m highly supportive of having a preset of an overly prescriptive formatter. It doesn&rsquo;t matter if it&rsquo;s spaces vs tabs, 2
-                spaces vs 4 spaces, curly braces on the same line or newline; as long as you have a formatter that keeps it consistent. This cuts down on all
-                the unnecessary time reviewing and fixing code formatting while still being easy to read and scan through. Make them as strict as possible,
-                ideally 100% reproducible where every line of code only has one way it can be formatted. Again, it doesn&rsquo;t matter which style you pick
-                but just pick something and stick with it, it&rsquo;s all about consistency here.
+                When something goes wrong (especially something <em>really catastrophic</em>), it&rsquo;s usually a combination of
+                both process and people problems. The difference here is that process is more deterministic compared to people.
+                People have off-days, get tired, make mistakes etc. so it&rsquo;s important to have a process (or automated systems)
+                in place to prevent that. This can mean anything from adding more test coverage, lint rules against bad code patterns,
+                and / or more alerts. It is however important to note that they need to <strong>maintain a certain level of quality
+                bar</strong>. As mentioned in <a href="https://binhong.me/blog/2025-05-04-push-fearlessly-with-automated-testing/#broken-tests">the previous
+                article</a>, flaky / broken tests are tech debt, same goes for noisy lint rules and alerts. Too many noisy lint rules and
+                alerts would lead to engineers disregarding them or adopting a &ldquo;wait-and-see&rdquo; mentality which is not ideal in
+                preventing future outages.
             </p>
             <h3 style="text-align: center;">. . .</h3>
-            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-05-23-code-review-culture/" target="_blank" rel=”noopener noreferrer”><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; padding: 12px 20px; text-align: center; text-decoration: none; font-weight: bold;">Read the rest in the blog!</div></a>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-05-30-no-blame-sev-culture/" target="_blank" rel=”noopener noreferrer”><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; padding: 12px 20px; text-align: center; text-decoration: none; font-weight: bold;">Read the rest in the blog!</div></a>
         </div>
         <p>
             <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>Unsubscribe</a>

@@ -84,6 +84,7 @@ class Handler(BaseHTTPRequestHandler):
                     error = "something went wrong"
 
                 if not error:
+                    print('\033[91m' + "Unsubscribed: " + email + '\033[0m')
                     self.wfile.write(
                         (config.unsubscribe_success_response
                             .replace("{#EMAIL_INPUT}", email)
@@ -189,6 +190,7 @@ class Handler(BaseHTTPRequestHandler):
                     error = "something went wrong"
 
                 if not error:
+                    print('\033[91m' + "Unsubscribed: " + email + '\033[0m')
                     self.wfile.write(
                         (config.unsubscribe_success_response
                             .replace("{#EMAIL_INPUT}", email)
@@ -229,7 +231,6 @@ def subscribe(email: str, source_ip: str) -> str:
                 (email, key, datetime.datetime.now().isoformat(), source_ip, False)
             )
             connection.commit()
-            print('\033[92m' + "New Subscriber: " + email + '\033[0m')
             return ""
         else:
             print("post_subscribe (failed to send) - ", email)
@@ -253,6 +254,7 @@ def confirm(key: str) -> str:
             WHERE email = '{0}' and key = '{1}'
         """.format("".join(email), key))
         connection.commit()
+        print('\033[92m' + "New subscriber confirmed: " + email + '\033[0m')
         return ""
     else:
         return "invalid key"
