@@ -1,6 +1,7 @@
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
 
 
 class Email():
@@ -8,6 +9,7 @@ class Email():
         self.email = config["address"]
         self.username = config["username"]
         self.password = config["password"]
+        self.to = config["to"]
         self.port = config["port"]
         self.server = config["server"]
         self.confirmation_title = config["confirmation_title"]
@@ -15,7 +17,7 @@ class Email():
 
 
     def send_confirmation_email(self, to, key) -> bool:
-        return self.send_email(
+        return self.send_html_email(
             to,
             self.confirmation_title,
             self.confirmation_content
@@ -24,13 +26,32 @@ class Email():
         )
 
 
-    def send_email(self, to, title, content) -> bool:
+    def send_html_email(self, to, title, content) -> bool:
         message = MIMEMultipart("alternative")
         message["Subject"] = title
         message["From"] = self.email
         message["To"] = to
         message.attach(MIMEText(content, "html"))
+        return self.send_email(to, message)
 
+
+    def new_subscription_notification(self, subscriber: str) -> bool:
+        message = MIMEText("New subscriber: " + subscriber)
+        message["Subject"] = "New subscriber attempt"
+        message["From"] = self.email
+        message["To"] = self.to
+        return self.send_email(self.to, message)
+
+
+    def new_confirmed_subscriber_notification(self, subscriber: str) -> bool:
+        message = MIMEText("New confirmed subscriber: " + subscriber)
+        message["Subject"] = "New subscriber!"
+        message["From"] = self.email
+        message["To"] = self.to
+        return self.send_email(self.to, message)
+
+
+    def send_email(self, to: str, message: MIMEBase) -> bool:
         context = ssl.create_default_context()
         if self.port == 587:
             with smtplib.SMTP(self.server, self.port) as server:

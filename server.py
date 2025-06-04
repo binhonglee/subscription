@@ -142,7 +142,7 @@ class Handler(BaseHTTPRequestHandler):
                     email = ""
                     if "email" in post_data and len(post_data["email"]) > 0:
                         email = post_data["email"][0]
-                    error = subscribe(email, self.headers.get('X-Real-IP'))
+                    error = subscribe(email, self.headers.get('X-Real-IP') or "")
                 except Exception as e:
                     print("post_subscribe - ", e, email)
                     error = "something went wrong"
@@ -231,6 +231,7 @@ def subscribe(email: str, source_ip: str) -> str:
                 (email, key, datetime.datetime.now().isoformat(), source_ip, False)
             )
             connection.commit()
+            config.email_sender.new_subscription_notification(email)
             return ""
         else:
             print("post_subscribe (failed to send) - ", email)
@@ -254,6 +255,7 @@ def confirm(key: str) -> str:
             WHERE email = '{0}' and key = '{1}'
         """.format("".join(email), key))
         connection.commit()
+        config.email_sender.new_confirmed_subscriber_notification(email)
         print('\033[92m' + "New subscriber confirmed: " + email + '\033[0m')
         return ""
     else:
@@ -273,7 +275,7 @@ def unsubscribe_key(key: str) -> str:
         return "invalid key"
 
 
-def unsubscribe(email: str) -> str:
+def unsubscribe(email: str) -> str | None:
     if not is_valid_email(email):
         return "email is invalid"
 
@@ -285,7 +287,7 @@ def unsubscribe(email: str) -> str:
         connection.commit()
 
 
-def new_bad_ip(ip: str) -> str:
+def new_bad_ip(ip: str):
     bad_ip.new_bad(ip)
     emails = cursor.execute("SELECT email FROM subscribers WHERE source_ip = '%s';" % ip)
     for row in emails:
@@ -298,7 +300,7 @@ def new_bad_ip(ip: str) -> str:
 
 
 def is_valid_email(email: str) -> bool:
-    return re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email)
+    return re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email) is not None
 
 
 if __name__ == "__main__":
