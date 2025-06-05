@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px;">
+        <h1 style="text-align: center;">BinHong's Newsletter - A/B Testing</h1>
+        <h2 style="text-align: center;">Basic guide to running a good A/B test</h2>
+        <div class="post_content">
+            <p>
+                This is a basic introduction on how to run a good A/B test. A/B testing is a method where your user pool is
+                segmented into multiple groups, allowing you to test different product interactions and understand how these
+                changes affect user behavior. For any metric / data driven team, A/B testing serves as a critical tool in
+                measuring success.
+            </p>
+            <p>
+                <em>
+                    This is part of a series <a href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/">(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <h2>Goal + Guardrail metrics</h2>
+            <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
+                <p>&ldquo;When a measure becomes a target, it ceases to be a good measure&rdquo; - Goodhart&rsquo;s Law</p>
+            </div>
+            <p>
+                Goal metrics serve as a target, the specific thing you want to change or improve. While I largely agree with
+                Goodhart&rsquo;s Law, I also believe that a sufficiently comprehensive <strong>set</strong> of metrics will
+                help mitigate the downside (or at least minimize it) thus making it still <em>relatively</em> &ldquo;a good
+                measure&rdquo;. This is where guardrail metrics come in to ensure we aren&rsquo;t just &ldquo;sacrificing x
+                to boost y&rdquo; especially in an unsustainable manner.
+            </p>
+            <p>
+                As an example, if you want to increase usage on your app, you can provide generous discounts (or even pay
+                users to do so) but that&rsquo;s obviously very unsustainable so you should set a clear budget on how much
+                you can spend on these promotions and / or cost per new active user acquired you allow for such a project
+                to ship. Here your goal metric would be &ldquo;new active users acquired&rdquo; while your guardrail would
+                be cost (lost revenue). They need to both look good from the experiment before you decide on shipping the
+                product change.
+            </p>
+            <h3 style="text-align: center;">. . .</h3>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-06-06-a-b-testing/" target="_blank" rel=”noopener noreferrer”><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #1e681e; padding: 12px 20px; text-align: center; text-decoration: none; font-weight: bold;">Read the rest in the blog!</div></a>
+        </div>
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel=”noopener noreferrer”>Unsubscribe</a>
+        </p>
+    </body>
+</html>
