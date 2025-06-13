@@ -2,11 +2,13 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
+from email.utils import formataddr
 
 
 class Email():
     def __init__(self, config):
         self.email = config["address"]
+        self.name = config["name"]
         self.username = config["username"]
         self.password = config["password"]
         self.to = config["to"]
@@ -29,7 +31,7 @@ class Email():
     def send_html_email(self, to, title, content) -> bool:
         message = MIMEMultipart("alternative")
         message["Subject"] = title
-        message["From"] = self.email
+        message["From"] = formataddr((self.name, self.email))
         message["To"] = to
         message.attach(MIMEText(content, "html"))
         return self.send_email(to, message)

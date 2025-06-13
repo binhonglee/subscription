@@ -3,6 +3,7 @@
     "port": 8080,
     "email": {
         "address": "",
+        "name": "",
         "username": "",
         "password": "",
         "port": 465,
