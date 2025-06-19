@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <link rel="canonical" href="https://binhong.me/blog/">
-    <meta name="robots" content="noindex">
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=https://binhong.me/blog/">
-  </head>
-</html>
+            <h1 class="title">Subscribe to BinHong's Newsletter!</h1>
+            <br />
+            <form action="https://binhong.me/newsletter/subscribe" method="post">
+                <input type="email" name="email" placeholder="email@domain.com"/>
+                <noscript>
+                  <br />
+                  <label>You will need to manually get this secret from <a href="https://binhong.me/newsletter/secret">here</a></label>
+                  <input name="secret" placeholder="secret"/>
+                  <br />
+                </noscript>
+                <input type="hidden" name="secret" id="secret" value="123potato123"/>
+                <button type="submit" name="submit" class="subscribe">Subscribe</button>
+            </form>
+            <script type="text/javascript" src="https://binhong.me/blog/secret.js"></script>

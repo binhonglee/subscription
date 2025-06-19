@@ -46,7 +46,7 @@ class Handler(BaseHTTPRequestHandler):
             case "secret":
                 self.wfile.write(secret.get_secret().encode("utf-8"))
             case "subscribe":
-                self.wfile.write((config.landing).encode("utf-8"))
+                self.wfile.write((config.landing.replace("{#SECRET}", secret.get_secret())).encode("utf-8"))
             case "confirm":
                 try:
                     key = paths[2]
@@ -99,7 +99,7 @@ class Handler(BaseHTTPRequestHandler):
                         ).encode("utf-8")
                     )
             case _:
-                self.wfile.write((config.landing).encode("utf-8"))
+                self.wfile.write((config.landing.replace("{#SECRET}", secret.get_secret())).encode("utf-8"))
 
 
     def do_POST(self):
@@ -206,7 +206,7 @@ class Handler(BaseHTTPRequestHandler):
                     )
             case _:
                 new_bad_ip(self.headers.get('X-Real-IP') or "")
-                self.wfile.write((config.landing).encode("utf-8"))
+                self.wfile.write((config.landing.replace("{#SECRET}", secret.get_secret())).encode("utf-8"))
 
 
 def subscribe(email: str, source_ip: str) -> str:
