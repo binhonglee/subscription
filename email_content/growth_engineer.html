@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Growth Engineer</h1>
+        <h2 style="text-align: center;">Taking fine-tuning to the next level</h2>
+        <div class="post_content">
+            <!-- <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
+                <p>
+                    Ask a programmer to review 10 lines of code, he&rsquo;ll find 10 issues. Ask him to do 500 lines and he&rsquo;ll say it looks good.
+                    - <a href="https://x.com/girayozil/status/306836785739210752">@girayozil</a>
+                </p>
+            </div> -->
+            <p>
+                While I&rsquo;ve shipped a lot of growth wins (literally the first line on my resume), I&rsquo;m actually very far from a prototypical growth engineer. That said, in this piece, I want to explore a bit more into what it&rsquo;s like being a growth engineer and what makes you good at being one. Growth engineers are generally 1 -&gt; 100 experts instead of 0 -&gt; 1. They fine-tune every little detail by running a lot of experiments with marginal changes to understand the user problem and drive growth impact (<em>line goes up</em>).
+            </p>
+            <p>
+                <em>
+                    This is part of a series <a href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/">(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-06-20-growth-engineer/" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read in blog instead</div></a>
+            <h2>A/B Test Everything</h2>
+            <p>When I say <em>everything</em>, I mean <strong>everything</strong>. Every button change, content change, margin change, slap an experiment on it. You need to be numbers obsessed and understand how anything moves the topline metric (the metric you / your team cares the most about). In that same sense, you might want to run experiments in chunks of small changes instead of a big chunk to better understand how each small change affects the user behavior. This would later help you in better understanding what is a good growth lever vs what isn&rsquo;t. Alternatively (depending on the type of changes), you can also have multiple variants with different mixes to achieve something similar.</p>
+            <p><em>For more on A/B testing, check out <a href="https://binhong.me/blog/2025-06-06-a-b-testing/" target="_blank" rel="noopener noreferrer">this other post I wrote a few weeks ago here</a>.</em></p>
+            <h2>Understanding Scale</h2>
+            <p>Scale decides necessity and value. If you have no scale, then there&rsquo;s nothing at the top of your funnel to begin with, which makes optimizing the rest of the funnel a common &ldquo;preemptive optimization&rdquo; behavior. Don&rsquo;t add complexity in places you don&rsquo;t need just because &ldquo;it&rsquo;ll be useful in the future&rdquo;. You can build them in the future when needed, then actually measure the value of such a feature to validate your hypothesis (more on this later about A/B testing).</p>
+            <h2>Identifying opportunities</h2>
+            <p>I wrote <a href="https://binhong.me/blog/2025-06-13-product-growth-opportunities/" target="_blank" rel="noopener noreferrer">a separate complementary piece on this a few weeks ago here</a> mainly because it ended up being so long that it probably deserves to be its own separate thing. This will be a core part of your job and in my opinion the biggest separation factor for a <em>&ldquo;pure bred&rdquo;</em> (lol) growth engineer. Many engineers get stuck or move away from growth over time (especially around IC5 -&gt; IC6 level) as they realize that they can no longer come up with new ideas and directions to continue growing the product sustainably.</p>
+            <h2>Cost analysis</h2>
+            <p>On some occasions, there will be cost tradeoffs. Most commonly, by spending more money you can get more users (promotions, SMS cost, etc.) which makes it very important to define and understand how much spending is reasonable to earn how many users (cost per user). From there, you should only target to ship projects where it shows that the <em>cost per user</em> is lower than the given guideline. Important to note that <em>cost</em> here isn&rsquo;t always directly money, but also valuable real estate (prominent position in the app) or attention (push notification, email, messages) which some could also have a hard-cap (on top of the aforementioned <em>cost per user</em>).</p>
+            <h2>User intent</h2>
+            <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
+                <p>You can&rsquo;t force someone to love you.</p>
+            </div>
+            <p>When someone (or a team) is metric chasing, the actual user (and their intent) can sometimes be neglected. It&rsquo;s always important to keep them in mind and practice some empathy to better understand what the user actually wants and build around that. Even if you were able to <em>trick</em> users into something they do not intend to do, the long-term effect of it is likely unsustainable.</p>
+            <p>I had a personal counter-example here where I once fixed a 3rd party login issue (after login success, instead of redirecting users back to the 3rd party, we would send them to news feed) resulting in a 2M MAU loss from our test. However, it made sense only because we count every person who sees feed as MAU even when (in this case) they did not intend to do so. We ran a separate long-term experiment and saw that the actual loss was significantly lower than that (like maybe only 5% of the original number) because these people were really just trying to login to a 3rd party app (Spotify, Tinder etc.) instead of wanting to browse news feed.</p>
+            <h2>Failed tests</h2>
+            <p>When you take a bet and it didn&rsquo;t materialize, your instinct might be to lay low and quietly do away with the project entirely. That would be a massive mistake. Instead, you should focus on what learnings or takeaways you have that can be shared with everyone else <em>especially for someone who might want to try this again in the future</em>. Generally, there are some key factors on failure root-cause. Make sure to clearly articulate them as you announce your experiment result for the purpose of having clear future reference. If / when someone were to try this again, they can look back at your attempt and see if the landscape had changed enough (based on your learnings) that it might warrant a new attempt.</p>
+            <h2>Long term impact</h2>
+            <p>Finding growth opportunities isn&rsquo;t about hunting for silver bullets, but more about understanding where your product is bleeding users and why. Don&rsquo;t let growth pursuits distract from building something people actually want. The best growth <em>&ldquo;hack&rdquo;</em> is still making a good product that gets people what they want.</p><p>On one hand, everyone hated the idea of a long-term holdout (where a certain group of users will just have missing features for an extended period of time); on the other hand, you need a way to measure long-term impact of your changes. That said, due to lack of commonality in this practice, the accuracy of such measurement may not be as high as regular shorter-term tests.</p>
+            <div style="padding: 0 15px; border: solid; border-radius: 10px; border-width: 2px; border-color: #181a18">
+                <p>Long term impact is a myth - some E6+ Growth Engineer</p>
+            </div>
+            <p>The timing makes things worse. By the time you see results from a long-term experiment, you&rsquo;re usually in a different performance review cycle than when you built it. This makes it nearly impossible to properly reward thoughtful long-term thinking or penalize short-sighted decisions. What should be a performance measurement tool becomes just a way to look back and say &lsquo;oh, that&rsquo;s interesting&rsquo; after it&rsquo;s too late to matter.</p>
+            <h2>Wrap up</h2>
+            <p>Growth engineering is fundamentally about disciplined curiosity. You&rsquo;re constantly asking &ldquo;what if we change this?&rdquo; and then actually finding out through experiments rather than debates. It&rsquo;s the difference between having opinions about user behavior and having data about user behavior. Always remember that growth isn&rsquo;t <em>just</em> about running A/B tests. It&rsquo;s important to also understand how / why users behave a certain way. The challenges are often less <em>technically complex</em> but more about measurement accuracy, experiment design, and building user-friendly interfaces that even your grandma can easily understand.</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p>This is a new (experimental) section where I'd share interesting articles I come across since the last issue.</p>
+        <p><a href="https://www.malwarebytes.com/blog/news/2025/06/scammers-hijack-websites-of-bank-of-america-netflix-microsoft-and-more-to-insert-fake-phone-number" target="_blank" rel="noopener noreferrer">[Malwarebytes] Scammers hijacking search to insert fake phone number to mislead users</a></p>
+        <p><a href="https://localmess.github.io/" target="_blank" rel="noopener noreferrer">[Local Mess] Covert Web-to-App Tracking via Localhost on Android</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
