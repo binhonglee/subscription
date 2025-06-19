@@ -219,8 +219,8 @@ def subscribe(email: str, source_ip: str) -> str:
         return ""
     else:
         key = str(uuid.uuid4())
-        time.sleep(5)
         if bad_ip.is_bad(email, source_ip):
+            time.sleep(5)
             print("post subscribe (bad_ip) - ", email)
             return ""
         elif config.email_sender.send_confirmation_email(email, key):
@@ -234,6 +234,7 @@ def subscribe(email: str, source_ip: str) -> str:
             config.email_sender.new_subscription_notification(email)
             return ""
         else:
+            time.sleep(5)
             print("post_subscribe (failed to send) - ", email)
             return "failed to send email"
 
