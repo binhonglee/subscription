@@ -247,8 +247,9 @@ def email_from_key(key: str) -> str:
 
 
 def confirm(key: str) -> str:
-    email = email_from_key(key)
+    email = cursor.execute("SELECT email FROM subscribers WHERE key = '%s' AND confirmed = FALSE;" % key).fetchone()
     if email:
+        email = "".join(email)
         cursor.execute("""
             UPDATE subscribers
             SET confirmed = TRUE
