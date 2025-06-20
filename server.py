@@ -1,12 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import datetime
-import json
 import re
 import sqlite3
-import sys
 import time
-import traceback
 import uuid
 from lib.config import Config
 from lib.bad_ip import BadIP
@@ -43,6 +40,9 @@ class Handler(BaseHTTPRequestHandler):
         print("GET", paths, "-", self.headers.get('X-Real-IP'))
 
         match paths[1]:
+            case "past_emails":
+                with open("email_content/" + paths[2], 'r', encoding='utf8') as email:
+                    self.wfile.write((email.read()).encode("utf-8"))
             case "secret":
                 self.wfile.write(secret.get_secret().encode("utf-8"))
             case "subscribe":

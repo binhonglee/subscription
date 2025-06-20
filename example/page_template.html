@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="https://binhong.me/fonts/fonts.css?v=1747738744">
   </head>
   <style>
+    iframe {
+       width: 100%;
+       height: 1000px;
+       max-height: 80vh;
+       border: none;
+    }
+
     input {
       box-sizing: border-box;
       border-radius: 12px;
@@ -60,8 +67,6 @@
     }
 
     footer {
-      position: fixed;
-      bottom: 0;
       width: 100%;
     }
 
@@ -109,6 +114,46 @@
             <div class="primary_block top_block">
               {#CONTENT}
             </div>
+            <hr />
+            <div class="primary_block" style="padding-bottom: 48px;">
+              <h1 class="title">Past issues</h1>
+              <details role="button" id="6/19/25" name="emails">
+                <summary><p>June 19th 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/growth_engineer.html">
+                </iframe>
+              </details>
+              <details role="button" id="6/12/25" name="emails">
+                <summary><p>June 12th 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/product_growth_opportunity.html">
+                </iframe>
+              </details>
+              <details role="button" id="6/5/25" name="emails">
+                <summary><p>June 5th 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/a_b_testing.html">
+                </iframe>
+              </details>
+              <details role="button" id="5/29/25" name="emails">
+                <summary><p>May 29th 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/no_blame_sev_culture.html">
+                </iframe>
+              </details>
+              <details role="button" id="5/22/25" name="emails">
+                <summary><p>May 22nd 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/code_review_culture.html">
+                </iframe>
+              </details>
+              <details role="button" id="5/20/25" name="emails">
+                <summary><p>May 20th 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/building_a_simple_newsletter_service.html">
+                </iframe>
+              </details>
+              <details role="button" id="5/15/25" name="emails">
+                <summary><p>May 15th 2025</p></summary>
+                <iframe src="https://binhong.me/newsletter/past_emails/art_of_posting.html">
+                </iframe>
+              </details>
+            </div>
+            <hr />
           </div>
         </div>
       </div>
