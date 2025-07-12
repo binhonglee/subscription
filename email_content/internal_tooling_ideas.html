@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Internal Tooling Ideas</h1>
+        <h2 style="text-align: center;">When and what to build for internal tools?</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/early_vibe_coding.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>For years, I built and maintained the only logged-out accessible dev tool set / platform at Meta. That earned me some reputation (in a certain circle) of being &ldquo;the idea guy on internal tools&rdquo;. Whenever I&rsquo;m asked about how I keep coming up with good ideas for valuable tools to build, my go-to answer has been &ldquo;I build tools when I get annoyed while doing my job&rdquo;. I&rsquo;ll try to expand that into more details below.</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/" target="_blank" rel=”noopener noreferrer”>(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-07-11-internal-tooling-ideas/" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Repetitive Typing</h2>
+            <p>The biggest value of having logged-out accessible dev tools is that you no longer have to log in to access dev tools. Login, while generally not too big of a friction for one-off situations, can be very bothersome if you have to type your credentials over and over again (for dev purposes) as you login (update config) → logout (test) → login (update config) → logout (test). If bypassing or removing the typing aspect is not possible, consider if it can be replaced with multiple choice button selection or just a single copy-paste friendly input.</p>
+            <h2>Unnecessary Waiting / Processing</h2>
+            <p>There are generally 2 types of waiting problems. The first one is where the wait takes a really long time and can be done asynchronously. Either move the wait into an async manner and integrate a messaging system to notify the author when it&rsquo;s completed, or pre-process them based on known patterns. For example, companies with large native app (iOS / Android) code bases have long build times. You can integrate build tools like <a href="https://bazel.build/remote/caching">Bazel with remote caching</a> so clients don&rsquo;t have to rebuild everything from scratch. Since an engineer will likely want to pull from remote <code>HEAD</code> (or <code>stable</code>) daily, you can have a cron job that pulls and builds daily in the morning before the engineer starts working, thus turning their wait block time into an <em>invisible</em> operation done automagically while they are having their breakfast or morning coffee. The second type is where the wait is one part of the process and can&rsquo;t be (deterministically) pre-processed ahead of time / asynchronously. In this case, consider if bypassing is an option (e.g., skips in <code>dev</code> but runs in <code>prod</code>). If not, you can also try making it non-blocking (move it off the main thread, batch processing, backfill etc.) as the user proceeds through the process. If all else fails, you can always turn that part of the process into an async step with an integration to a messaging system notifying the author once it&rsquo;s ready to proceed to the next step.</p>
+            <h2>Device Config &gt; Manual Hard-code</h2>
+            <p>In many of these cases, you can probably do manual hard-coding to get the intended behavior. However, doing so increases the risk of accidentally committing such hard-coded changes into prod (if not caught during code review). On top of that, when working on a complex code base, the engineer might not be familiar with the code pointer for where the hard-code needs to go. For instance, if you want to bypass the rate-limit of your feature but the rate-limit logic is owned by a separate team in an unfamiliar code base. As an added bonus, this also allows non-technical members of your team (designers, PMs etc.) to do product audits, dogfooding, and in-depth testing independently without needing dedicated engineering support.</p>
+            <h2>Non-deterministic Behaviors (ML override)</h2>
+            <p>This is somewhat similar to the manual hardcode situation mentioned above where you might want to override an ML decision to manually test out different decision combinations by the model. ML models (and AI) are relatively non-deterministic by design, but when building / testing a product, you want to make sure that you covered all the different possible scenarios. Having an override to switch between different potential responses allows for better coverage on both manual and automated testing, ensuring that your change behaves as intended.</p>
+            <h2>Chore</h2>
+            <p>This is more about employee satisfaction when working on a repetitive task may be boring or frustrating. Having tools to automate such work allows them to explore more interesting / challenging work, thus improving employee satisfaction, even if it doesn&rsquo;t necessarily save a significant amount of time. The best &ldquo;realistic&rdquo; way to measure this would be a rating system where you count the number of employees using it and ask for their feedback (both positive and negative), then compile to show the value it provides.</p>
+            <h2>Wrap up</h2>
+            <p>Building internal tools is about removing friction from your team&rsquo;s daily workflow. The best tools emerge from genuine pain points you experience while doing your job. Start small and focus on the annoyances that happen most frequently. The key is to stay observant of your own frustrations and act on them. Every great internal tool started with someone saying &ldquo;there has to be a better way to do this&rdquo;.</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://forums.swift.org/t/announcing-the-android-workgroup/80666/1" target="_blank" rel="noopener noreferrer">[Swift Forum] Announcing the Android Workgroup</a></p>
+        <p><a style="color: #1e681e;" href="https://www.theverge.com/openai/705999/google-windsurf-ceo-openai" target="_blank" rel="noopener noreferrer">[The Verge] OpenAI’s Windsurf deal is off — and Windsurf’s CEO is going to Google</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
