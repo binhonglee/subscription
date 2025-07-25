@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Major Incident Runbook</h1>
+        <h2 style="text-align: center;">Take a deep breath, you got this!</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-07-22.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>I wrote a similar version of this internally at Meta a few years ago for my org after finding myself in the middle of a few SEV1s in a row &ndash; and being consulted / asked for support in other similar situations. I thought this might be something useful to share (as a public version) as well. This won&rsquo;t be perfectly fitting for all use cases, but having a runbook works as an anchor in the midst of chaos, helping to get you unstuck from &ldquo;what&rsquo;s next?&rdquo;. Admittedly, this is an incomplete runbook that serves more as a template for your team or company to complete with more specific tooling guides (using <em>which</em> tool to achieve <em>what</em>, etc.).</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/" target="_blank" rel=”noopener noreferrer”>(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-07-25-major-incident-runbook/" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Stop the Bleed!</h2>
+            <p>The highest priority is to stop the bleeding immediately. <em>Flip a killswitch, roll back changes, apply server-side fixes, apply client-side fixes</em> - <strong>in that order</strong>. A killswitch generally propagates faster, thus is preferred over code changes, but even then, prioritize rolling back changes instead of forward fixing. Forward fixing adds more unknown factors into the mix (because that&rsquo;s more new code which could now cause new / different problems); rolling back, on the other hand, is more predictable. Server-side fixes over client-side fixes should be pretty obvious since you can guarantee the server version (as the service provider), but you can&rsquo;t always force a client to update (native apps), or there could be some caching involved (web).</p>
+            <h2>Multiple Workstreams</h2>
+            <p>During a major incident, there are generally multiple things that can or need to happen in parallel. Break them down into clear workstreams and delegate a domain expert to run each of them. If more things are discovered down the line (or the situation changes), switch up the workstream and get different people (domain experts) involved to run different things. Since you&rsquo;re dealing with an incident (which are usually time sensitive), <strong>never hesitate to call people</strong>. This needs to be said a lot because people constantly hesitate about false positives or getting on others&rsquo; bad side for inaccurately calling them up. But you won&rsquo;t know what you don&rsquo;t know without getting the domain expert to show up and verify what you&rsquo;re seeing.</p>
+            <h2>Chat Management</h2>
+            <p>Alongside having separate workstreams, you should also set up separate chat threads for each workstream to keep the <em>main chat</em> low on noise. That said, make sure to announce the establishment and / or major milestones of each new workstream clearly within the main chat so everyone relevant is correctly included. You might be in a lot of different chats and things will be chaotic, so you will need to take extra care in ensuring that the right people are in the right chat to allow them to get their different tasks going. Everyone should still be in the main chat, but most discussion should happen in the workstream chat.</p>
+            <h2>Sync Meetings</h2>
+            <p>There are generally 2 types of sync meetings. First is the &ldquo;everything just happened so we started a meeting to info dump and get everyone up to speed.&rdquo; This meeting will always be chaotic with a lot of people joining to figure out what&rsquo;s happening and what to do next. (There might also be people who only joined out of curiosity, but as long as they aren&rsquo;t interrupting, they are the least of your problems - unless Zoom is not scaling lol.) Set out a clear goal, a set of tasks, and an owner for each of those tasks. Finally, set a follow-up date and time (usually in a few hours) for everyone to regroup with new findings and progress to determine next steps.</p>
+            <p>The second type is the follow-up and / or recurring meeting. This will feel more like your regular team standup meeting except with a lot more urgency. It&rsquo;s important to note that if there&rsquo;s any major breakthrough, people shouldn&rsquo;t wait until the next planned meeting time to report (because, well, this is an outage lol) but should instead share it with everyone immediately. This goes back to the previous point about chat management where you (as the incident manager) will need to monitor each workstream chat to catch something like this. After resolving the core issue, there might still be <em>important</em> cleanup work needed to be handled with a similar level of urgency to prevent the same outage from happening again in a very short time. In these long-running incident cleanups, you might opt to have daily (or even twice-a-day) sync meetings until the cleanup is complete.</p>
+            <h2>Wrap up</h2>
+            <p>As a whole, you will largely be more like a PM / TPM instead of a regular engineer when handling a lot of this <em>alignment</em> work. If you think someone else is better suited to handle this (another more senior engineer or your manager, etc.), ask for help while you focus on the thing that you do best (likely as the subject matter expert on investigation or remediation). Remember that incident management is a skill that improves with practice - don&rsquo;t expect to be perfect on your first few incidents, even experienced engineers can feel overwhelmed when everything is on fire. Don&rsquo;t forget to acknowledge the team&rsquo;s efforts since major incidents are stressful for everyone involved, and use this runbook as a starting point while adapting it based on your team&rsquo;s specific needs and continuously improving your processes with each incident.</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://www.nature.com/articles/s41562-023-01538-4" target="_blank" rel="noopener noreferrer">[Nature Human Behaviour] Negativity drives online news consumption</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
