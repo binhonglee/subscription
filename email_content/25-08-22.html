@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Hidden Privacy / Security Pitfalls</h1>
+        <h2 style="text-align: center;">Sometimes good coding practice isn&#39;t good enough</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-08-22.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>Most software engineers think of this as &ldquo;someone else&rsquo;s problem&rdquo; (usually a privacy engineer or security engineer), but realistically, there&rsquo;s only so much stuff (bad code lol) they can catch. Especially if you work in some of the more sensitive areas, it&rsquo;s not realistic to have them do code audits for every change. This means that you as the code author (or reviewer) need to at least pick up some basic instincts about things that can pose risks.</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-04-the-opinionated-engineer/" target="_blank" rel=”noopener noreferrer”>(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-08-23-hidden-privacy-and-security-pitfalls/" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <em><strong>Disclaimer</strong>: I&rsquo;m neither a privacy engineer nor a security engineer (but a software engineer) so take this mostly as a way to raise awareness about considering some of these pitfalls while building instead of as an expert opinion on what to do.</em></p>
+            <h2>Timing attack</h2>
+            <p>Even if you return the same response every time, you might still be leaking data (or mostly inference) based on the timing it took the server to respond. As an example, a typical email + password login system probably looks like this:</p>
+            <ol>
+                <li>Hash password</li>
+                <li>Email lookup</li>
+                <li>Compare hash</li>
+            </ol>
+            <p>Now, considering that password hashing can take quite a bit of time and resources, we could rearrange the order to make it more efficient by making use of &ldquo;early returns.&rdquo; Something like this:</p>
+            <ol>
+                <li>Email lookup</li>
+                <li>Hash password</li>
+                <li>Compare hash</li>
+            </ol>
+            <p>With this new setup, you&rsquo;d only do password hashing when an email already exists in your record, thus saving time and processing power from unnecessary password hashing. However, you&rsquo;re also returning your network request much sooner. This becomes an unintentional leak where a bad actor can use it to tell if an email exists in your database or not by doing some timed response comparison. My favorite solution to this problem (when applicable) is to add a random response delay—not long enough to significantly affect user experience, but just long enough to throw an attacker off.</p>
+            <h2>Scraping</h2>
+            <p>Generally the <em>easy</em> solution here is to slap a rate limit on it and call it a day. The problem, however, is that you need to realize not all endpoints are created equal. Most evidently, you have an endpoint that returns info about a user when given an ID, while you also have an endpoint that returns info about <strong>a list of users</strong> when given a list of IDs. Both of these endpoints can&rsquo;t just share the same rate limiting because scraping the latter endpoint is <code>list_length</code>x more <em>efficient</em> than the former.</p>
+            <h2>Credential stuffing</h2>
+            <p>This is usually the result of password reuse. While you can <em>technically</em> do credential stuffing with just randomly enumerated credentials, the cost is unlikely to be worth the outcome for the attacker (unless there are some specific exceptions). Since people reuse passwords and there have been many previous hacks (unfortunately containing plaintext passwords), your perfectly secure authentication system becomes vulnerable not because of your code, but because of breaches elsewhere. That said, these attacks are <em>usually</em> more obvious, coming from an <em>expected</em> set of IPs (all from the same location or same VPS provider, etc.).</p>
+            <h2>Contactpoint disclosure</h2>
+            <p>A little different from the rest of the list, this is more of a <em>type</em> of disclosure than a <em>method</em> of disclosure. While many systems are more conservative and opt for the route of never even disclosing if a specific contactpoint (email / phone number) is even associated with the platform, some do allow for it. However, this will require a bit more care in handling such disclosure where we don&rsquo;t want to disclose <strong>other</strong> contactpoints being connected to a given contactpoint (even through inference). The main reason being that this risks leaking identities behind pseudonyms where people can <em>connect the dots</em>.</p>
+            <h2>Rate limiting</h2>
+            <p>Rate limiting is both a valuable tool and also a potential risk of exposure. Most evidently, rate limiting helps reduce (and hopefully prevent) scraping and credential stuffing attacks. However, in some systems, rate limits are set on a per-account basis, making it a risk of exposure as you can do targeted attacks with some reasonable correlation to get information out of it.</p>
+            <p>Here&rsquo;s an example:</p>
+            <p><em>Condition: email A and phone A are both owned by the same account while email B is not.</em></p>
+            <ul>
+                <li>try (and fail) login with email A -&gt; no rate limit</li>
+                <li>try (and fail) login with email B -&gt; no rate limit</li>
+                <li>try (and fail) login with phone A -&gt; no rate limit</li>
+                <li>keep trying email A until it&rsquo;s rate limited</li>
+                <li>try (and fail) login with email B -&gt; no rate limit (since different account)</li>
+                <li>try (and fail) login with phone A -&gt; <strong>rate limited</strong></li>
+            </ul>
+            <p>There are many reasons (or other situations) where it&rsquo;s not immediately obvious how introducing an account-based rate limit can be a risk.</p>
+            <h2>Phone recycling</h2>
+            <p>Many platforms rely on phone number verification to authenticate your ownership of the account, but phone number ownership isn&rsquo;t exactly <em>immutable</em>. In fact, phone numbers commonly switch hands in most countries for a variety of reasons (especially as people move across countries). Unfortunately, this is a much trickier problem to tackle due to the wide variety of carriers spread across different countries having different processes and regulations around it.</p>
+            <h2>Email recycling</h2>
+            <p>While email recycling isn&rsquo;t as common as phone recycling, it still persists (especially those with custom domains). In fact, many years ago one of the largest email service providers actually allowed anyone to register expired email addresses. This became a major attack vector on Facebook since many people back then set their emails to be shown publicly on their Facebook profiles, while also simultaneously stopping using those same email addresses - leaving them to expire. Thankfully, most email providers have learned of such attack vectors and no longer allow deactivated / deleted email addresses to be re-registered <em>ever</em>.</p>
+            <h2>Wrap up</h2>
+            <p>These pitfalls often emerge from well-intentioned optimizations that look perfectly reasonable in isolation. The key is developing a mental checklist of common attack patterns rather than becoming paranoid about every line of code. Security isn&rsquo;t just about preventing obvious attacks but instead, it&rsquo;s to think through the subtle ways your system behavior can be observed and / or exploited.</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://leadinstride.beehiiv.com/p/why-engineers-should-learn-to-communicate-like-executives-yes-you-694435cfc95c1f7d" target="_blank" rel="noopener noreferrer">[The Next Steps: Lead InStride] Why Engineers Should Learn to Communicate Like Executives (Yes, You)</a></p>
+        <p><a style="color: #1e681e;" href="https://www.figma.com/blog/a-tale-of-two-parameter-architectures/" target="_blank" rel="noopener noreferrer">[Figma] A tale of two parameter architectures—and how we unified them</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
