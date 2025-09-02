@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">GitHub Action Runner Alternatives</h1>
+        <h2 style="text-align: center;">Cheaper hosted 3rd party solutions</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-09-01.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>A few months ago, I wrote about my attempt and reasoning behind <a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="/blog/2025-04-25-self-hosted-github-runners/">managing my own fleet of self-hosted GitHub Action Runners</a>. I&rsquo;ve since learnt that there are quite a few hosted alternative runners that are both faster and cheaper than GitHub&rsquo;s default runners. This article is just a quick summary of what I&rsquo;ve found.</p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-09-02-github-action-runner-alternatives/" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Linux Runners Comparison</h2>
+            <div style="padding: 20px 0;">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Free Tier</th>
+                            <th>Paid Pricing (2vCPU)</th>
+                            <th>Performance</th>
+                            <th>Special Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://www.blacksmith.sh/">Blacksmith</a></td>
+                            <td style="border-top: 1px solid black;">3,000 minutes/month</td>
+                            <td style="border-top: 1px solid black;">$0.004/min (50% of GitHub)</td>
+                            <td style="border-top: 1px solid black;">2x faster builds, 4x faster cache</td>
+                            <td style="border-top: 1px solid black;">Unlimited concurrency, gaming CPUs</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://buildjet.com/">BuildJet</a></td>
+                            <td style="border-top: 1px solid black;">$5 one-time credit</td>
+                            <td style="border-top: 1px solid black;">$0.004/min (50% of GitHub)</td>
+                            <td style="border-top: 1px solid black;">2x faster (variable CPU models)</td>
+                            <td style="border-top: 1px solid black;">64 AMD + 32 ARM concurrent vCPUs, 20GB cache</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://carbonrunner.io/">CarbonRunner</a></td>
+                            <td style="border-top: 1px solid black;">❌ None</td>
+                            <td style="border-top: 1px solid black;">$0.006/min (25% cheaper than GitHub)</td>
+                            <td style="border-top: 1px solid black;">Standard performance</td>
+                            <td style="border-top: 1px solid black;">90% lower CO2 emissions, 42 regions</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://cirrus-runners.app/">Cirrus Runners</a></td>
+                            <td style="border-top: 1px solid black;">❌ None</td>
+                            <td style="border-top: 1px solid black;">$150/month unlimited</td>
+                            <td style="border-top: 1px solid black;">2-3x faster performance</td>
+                            <td style="border-top: 1px solid black;">Fixed pricing, no minute limits, limited concurrency</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="http://depot.dev/">Depot</a></td>
+                            <td style="border-top: 1px solid black;">❌ None</td>
+                            <td style="border-top: 1px solid black;">$20 for 20,000 minutes, then $0.004/min</td>
+                            <td style="border-top: 1px solid black;">30% faster, 10x faster cache</td>
+                            <td style="border-top: 1px solid black;">Docker-focused, per-second billing, unlimited cache</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;">GitHub</td>
+                            <td style="border-top: 1px solid black;">2,000 minutes/month</td>
+                            <td style="border-top: 1px solid black;">$0.008/min</td>
+                            <td style="border-top: 1px solid black;">Baseline</td>
+                            <td style="border-top: 1px solid black;">Official support</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://namespace.so/">Namespace</a></td>
+                            <td style="border-top: 1px solid black;">❌ None</td>
+                            <td style="border-top: 1px solid black;">$0.003</td>
+                            <td style="border-top: 1px solid black;">Fastest x64 performance</td>
+                            <td style="border-top: 1px solid black;">250GB storage, SSH access</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://puzl.cloud/">puzl.cloud</a></td>
+                            <td style="border-top: 1px solid black;">400 vCPU-minutes/month</td>
+                            <td style="border-top: 1px solid black;">$0.0008/min (€0.000008/vCPU-sec)</td>
+                            <td style="border-top: 1px solid black;">2x faster, 5x cheaper</td>
+                            <td style="border-top: 1px solid black;">Real-time per-second billing, 12vCPU per job</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://sprinters.sh/">Sprinters.sh</a></td>
+                            <td style="border-top: 1px solid black;">❌ None</td>
+                            <td style="border-top: 1px solid black;">Per-job pricing (10x cheaper)</td>
+                            <td style="border-top: 1px solid black;">Standard performance</td>
+                            <td style="border-top: 1px solid black;">Self-hosted in AWS, per-job pricing</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://runs-on.com/">RunsOn</a></td>
+                            <td style="border-top: 1px solid black;">Free for non-commercial</td>
+                            <td style="border-top: 1px solid black;">€300/year + $0.001-0.003/min (AWS costs)</td>
+                            <td style="border-top: 1px solid black;">30% faster, 90% cheaper</td>
+                            <td style="border-top: 1px solid black;">Self-hosted in AWS, GPUs, Windows</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://www.ubicloud.com/">Ubicloud</a></td>
+                            <td style="border-top: 1px solid black;">1,250 minutes (~$1 credit)</td>
+                            <td style="border-top: 1px solid black;">$0.0008/min (10x cheaper)</td>
+                            <td style="border-top: 1px solid black;">Newer CPUs, good performance</td>
+                            <td style="border-top: 1px solid black;">Open source, Hetzner hardware</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://www.warpbuild.com/">WarpBuild</a></td>
+                            <td style="border-top: 1px solid black;">❌ None</td>
+                            <td style="border-top: 1px solid black;">$0.004/min (50% of GitHub)</td>
+                            <td style="border-top: 1px solid black;">2x faster, 50% cheaper</td>
+                            <td style="border-top: 1px solid black;">Snapshots, unlimited cache</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <h2>macOS Runners Comparison</h2>
+            <div style="padding: 20px 0;">
+                <div style="overflow-x: auto;">
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Pricing</th>
+                            <th>Hardware</th>
+                            <th>Performance</th>
+                            <th>Key Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://cirrus-runners.app/">Cirrus Runners</a></td>
+                            <td style="border-top: 1px solid black;">$150/month unlimited</td>
+                            <td style="border-top: 1px solid black;">M4 Pro (latest)</td>
+                            <td style="border-top: 1px solid black;">2x faster performance</td>
+                            <td style="border-top: 1px solid black;">Fixed pricing, no minute limits, limited concurrency</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;">GitHub</td>
+                            <td style="border-top: 1px solid black;">$0.08/min (10x multiplier)</td>
+                            <td style="border-top: 1px solid black;">Intel Mac + M2 Pro XL ($0.16/min)</td>
+                            <td style="border-top: 1px solid black;">Baseline</td>
+                            <td style="border-top: 1px solid black;">Official support</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://namespace.so/">Namespace</a></td>
+                            <td style="border-top: 1px solid black;">$0.09</td>
+                            <td style="border-top: 1px solid black;">M4 Pro + M2 Pro</td>
+                            <td style="border-top: 1px solid black;">Fastest available</td>
+                            <td style="border-top: 1px solid black;">SSH/VNC access, bleeding-edge images</td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 1px solid black;"><a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://www.warpbuild.com/">WarpBuild</a></td>
+                            <td style="border-top: 1px solid black;">$0.04/min (50% cheaper)</td>
+                            <td style="border-top: 1px solid black;">M2 Pro</td>
+                            <td style="border-top: 1px solid black;">25% faster, 50% cheaper</td>
+                            <td style="border-top: 1px solid black;">Pay-per-use, macOS 13/14 support</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <h2>Widget</h2>
+            <em>This is fully written in client-side JavaScript so it only works <a style="color: #1e681e;" target="_blank" rel="noopener noreferrer" href="https://binhong.me/blog/2025-09-02-github-action-runner-alternatives/#widget">on the blog site directly</a>.</em>
+            <h2>Wrap up</h2>
+            <p>Obviously this is a rather simplistic view of the cost comparison (as well as the <em>speed</em> factor being unverified) between different options available in the market. Personally, I opted for Blacksmith for all my linux needs while continue to host my own M4 mac mini at home as the macOS runner (since the electricity cost is still cheaper than any of the above options).</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://www.scarletink.com/p/detailed-account-failed-principal-promotion" target="_blank" rel="noopener noreferrer">[Scarlet Ink] A Detailed Account of a Failed Principal Promotion</a></p>
+        <p><a style="color: #1e681e;" href="https://www.bmj.com/content/390/bmj.r1733" target="_blank" rel="noopener noreferrer">[The BMJ] Why scientists are rethinking the immune effects of SARS-CoV-2</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
