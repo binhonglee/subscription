@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Leaked `FakeIncorrectPassword`</h1>
+        <h2 style="text-align: center;">When your social media break turns into work</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-10-30.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>It was Thanksgiving day and I was mostly chilling at home scrolling Threads while watching YouTube. I then came across this post:</p>
+            <p>I immediately recognized that the screenshot is bad. <code>FakeIncorrectPassword</code> is an internal error code used when the integrity system thinks you&rsquo;re a bad actor (bot, scraper, credential stuffer etc) and so we would show you an <em>Incorrect Password</em> error message regardless of whether the password is correct. But as seen in the screenshot, we show the raw <code>FakeIncorrectPassword</code> string directly instead of the regular <em>Incorrect Password</em> error.</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/project-presentation/" target="_blank" rel=”noopener noreferrer”>(Project Presentation)</a> where I share stories of my past projects.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-10-31-leaked-fakeincorrectpassword" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Notifying owners</h2>
+            <p>The user noted that this happens on mobile web which means they happened to land on a test group, since a sister team had just started public testing this new UI / flow on mobile web. I tried ringing up the oncall for their team (who also happened to be the owner of the public test) but I saw that they had actually marked themselves out-of-office for the whole weekend through the upcoming Monday. Well, that&rsquo;s not good (also weird that they were off while oncall❓).</p>
+            <figure>
+                <img style="max-width: 100%;" src="https://binhong.me/blog/img/fakeincorrectpassword1.png">
+                <figcaption style="text-align: center;">Comparison between old vs new login screen</figcaption>
+            </figure>
+            <h2>Investigation</h2>
+            <p>Anyway, I had a few hours to kill before I needed to leave to join my friends&rsquo; Thanksgiving party. I looked at the time and told myself <em>&ldquo;I have time&rdquo;</em> so I decided to start debugging it myself. I&rsquo;d worked tangentially with this stuff before so I knew a few other things (like 2FA) that also need special handling should be working as intended. My hunch told me that this was caused by the gap between the Python stack (IG server) throwing some error that wasn&rsquo;t properly consumed by the Hack server stack (that determines the UI). So I searched for <code>FakeIncorrectPassword</code> in the Python stack and found something like <code>TwoFactorError</code>. Then, I looked for <code>TwoFactorError</code> in the Hack stack to see how it works and eventually found the one that didn&rsquo;t handle the case for <code>FakeIncorrectPassword</code>. Simple enough, I just had to add more stuff (iirc I added a few others as well as the aforementioned <code>FakeIncorrectPassword</code>) to the existing switch case.</p>
+            <figure>
+                <img style="max-width: 100%;" src="https://binhong.me/blog/img/fakeincorrectpassword2.png">
+                <figcaption style="text-align: center;">Simple diagram to show how the calls relate</figcaption>
+            </figure>
+            <h2>Testing</h2>
+            <p>At first, I tried triggering the <code>FakeIncorrectPassword</code> error on my devserver to test the fix but I don&rsquo;t really know how most of these things work (having never worked on integrity teams). I eventually figured I could just comment out the integrity system calls and just always force return <code>FakeIncorrectPassword</code> error. Trigger login and take a screenshot for both before and after the fix. Done! I sent the fix out for review and waited for a bit to make sure everything turned green on CI before leaving for the Thanksgiving party (didn&rsquo;t want to bring my laptop with me since I wasn&rsquo;t actually oncall lol).</p>
+            <h2>Shipping</h2>
+            <p>Before heading out, I tagged 2 other oncalls (on top of the OOO oncall) to let them know that I&rsquo;d written the fix and I&rsquo;d let them decide if they wanted to ship it or wait till Monday. One of them saw it and immediately approved + shipped my fix. Monday came around and my change got the attention of a few people from the security team. They eventually filed a post-hoc SEV for this and did an in-depth review on what went wrong in the process that led to the leak of this error message.</p>
+            <h2>Takeaway</h2>
+            <p>The main culprit here is that most Instagram code lives in a different stack (Python) than where the UI is (Hack) and a lot of the Python code just uses <code>string</code> everywhere instead of proper enums for something like this, making it really hard to keep track of all the potential edge cases that could be missed. Having some familiarity with both the Python and the Hack stacks made it easier to trace the problem and spot the gap in the error handling logic. The fix itself was straightforward once I found the right place, but getting there required understanding how errors flow between multiple systems.</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://www.seangoedecke.com/politics-is-your-responsibility/" target="_blank" rel="noopener noreferrer">[sean goedecke] Playing politics is how senior engineers protect their team</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
