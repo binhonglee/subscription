@@ -14,7 +14,9 @@
         <h2 style="text-align: center;">When your social media break turns into work</h2>
         <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-10-30.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
         <div class="post_content">
+            <p><em>Note: Sorry, the previous version of this email was missing the first screenshot.</em></p>
             <p>It was Thanksgiving day and I was mostly chilling at home scrolling Threads while watching YouTube. I then came across this post:</p>
+            <img style="max-width: 100%;" src="https://binhong.me/newsletter/attachments/fakeincorrectpassword_ss.webp">
             <p>I immediately recognized that the screenshot is bad. <code>FakeIncorrectPassword</code> is an internal error code used when the integrity system thinks you&rsquo;re a bad actor (bot, scraper, credential stuffer etc) and so we would show you an <em>Incorrect Password</em> error message regardless of whether the password is correct. But as seen in the screenshot, we show the raw <code>FakeIncorrectPassword</code> string directly instead of the regular <em>Incorrect Password</em> error.</p>
             <p>
                 <em>
@@ -24,13 +26,13 @@
             <a style="text-decoration: none;" href="https://binhong.me/blog/2025-10-31-leaked-fakeincorrectpassword" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
             <h2>Notifying owners</h2>
             <p>The user noted that this happens on mobile web which means they happened to land on a test group, since a sister team had just started public testing this new UI / flow on mobile web. I tried ringing up the oncall for their team (who also happened to be the owner of the public test) but I saw that they had actually marked themselves out-of-office for the whole weekend through the upcoming Monday. Well, that&rsquo;s not good (also weird that they were off while oncall❓).</p>
-            <figure>
+            <figure style="padding: 0; margin: 0;">
                 <img style="max-width: 100%;" src="https://binhong.me/blog/img/fakeincorrectpassword1.png">
                 <figcaption style="text-align: center;">Comparison between old vs new login screen</figcaption>
             </figure>
             <h2>Investigation</h2>
             <p>Anyway, I had a few hours to kill before I needed to leave to join my friends&rsquo; Thanksgiving party. I looked at the time and told myself <em>&ldquo;I have time&rdquo;</em> so I decided to start debugging it myself. I&rsquo;d worked tangentially with this stuff before so I knew a few other things (like 2FA) that also need special handling should be working as intended. My hunch told me that this was caused by the gap between the Python stack (IG server) throwing some error that wasn&rsquo;t properly consumed by the Hack server stack (that determines the UI). So I searched for <code>FakeIncorrectPassword</code> in the Python stack and found something like <code>TwoFactorError</code>. Then, I looked for <code>TwoFactorError</code> in the Hack stack to see how it works and eventually found the one that didn&rsquo;t handle the case for <code>FakeIncorrectPassword</code>. Simple enough, I just had to add more stuff (iirc I added a few others as well as the aforementioned <code>FakeIncorrectPassword</code>) to the existing switch case.</p>
-            <figure>
+            <figure style="padding: 0; margin: 0;">
                 <img style="max-width: 100%;" src="https://binhong.me/blog/img/fakeincorrectpassword2.png">
                 <figcaption style="text-align: center;">Simple diagram to show how the calls relate</figcaption>
             </figure>

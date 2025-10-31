@@ -43,6 +43,10 @@ class Handler(BaseHTTPRequestHandler):
             case "past_emails":
                 with open("email_content/" + paths[2], 'r', encoding='utf8') as email:
                     self.wfile.write((email.read()).encode("utf-8"))
+            case "attachments":
+                with open("attachments/" + paths[2], 'rb') as attachment:
+                    self.wfile.write(attachment.read())
+                    self.send_header('Access-Control-Allow-Origin', '*')
             case "secret":
                 self.wfile.write(secret.get_secret().encode("utf-8"))
             case "subscribe":
