@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #f0ede6;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Incident Review Process</h1>
+        <h2 style="text-align: center;">Let&#39;s make sure it doesn&#39;t happen again</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-11-13.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>In the <a style="color: #1e681e;" href="https://binhong.me/blog/2025-07-25-major-incident-runbook/" target="_blank" rel="noopener noreferrer">previous runbook</a>, I mostly focused on things to do <em>during</em> an incident as it happens. This week, we will focus more on what to do <em>after</em> the incident is resolved. This is an opportunity to look back at what went well, what went wrong, and how we can best prepare ourselves or prevent something similar from happening again in the future.</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/the-opinionated-engineer/" target="_blank" rel=”noopener noreferrer”>(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-11-14-incident-review-process" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Report</h2>
+            <p>After the incident, the incident owner should fill out an incident report detailing things like root cause, alerts, remediation, recovery, prevention, etc. Ideally this is made into a template and the author should go into detail about what actually happened vs what should have happened and how it could be improved. The report should be completed at least a day or two ahead of the review to allow for optional pre-reads.</p>
+            <h2>Review</h2>
+            <p>Usually you&rsquo;d need someone (or a group of people taking turns) to organize the review. Their job is to pick the set of incidents to review, make sure that incident owners fill out the report adequately, and that everyone relevant is invited and available to attend the review. It&rsquo;s not really a <em>hard</em> job per se but it requires some async communication and some level of familiarity with the org scope to ensure that all the right people involved in each incident will be there at the review.</p>
+            <h2>Audience</h2>
+            <p>Aside from incident owners and people directly involved in said incidents, team EMs, senior engineers, and senior org leaders (Director / VP) are critical to have present in the review. EMs are there to ensure visibility and awareness of the importance of follow-up work from the incident review. Senior engineers are there to raise questions and/or provide recommendations especially surrounding detection and prevention strategies. Senior org leaders showing up - at the very least - solidify the importance of the review and enforce that planned follow-ups are actually worked on with allocated time instead of being set aside / deprioritized.</p>
+            <h2>Follow-ups</h2>
+            <p>After the review, there will likely be a laundry list of follow-up work to be done. Note them down in your task tracker (Jira, Asana etc.) and assign them to the right owners. By default, the incident owner would own it but it&rsquo;s very common to have it assigned to peers or even external teams, depending on how/what was broken. One of the more common failure modes here is the lack of tracking on these follow-up tasks. Make sure to have a proper process to (at least) have someone - <em>anyone</em> - review these tasks over time to ensure they are being worked on in a timely manner and actually completed or attempted in good faith. It&rsquo;d be a shame (with a lot of awkward conversation) if there ended up being another similar incident that could have been prevented by said follow-up task.</p>
+            <h2>Pattern</h2>
+            <p>In some cases, frequent attendees might notice a pattern of incidents and propose wider improvements (instead of specifics to any incident). One example we ran into was how a lot of incidents could have been prevented by having automated tests. This wasn&rsquo;t because the team didn&rsquo;t make an effort to write them, but because there was a more underlying issue (outside of the team&rsquo;s direct purview) causing existing tests to become flaky. We ended up having an entire workstream focused on fixing all the automated test blockers found in the org. (I&rsquo;ll probably write about my experience working on it someday, under the <a style="color: #1e681e;" href="https://binhong.me/blog/project-presentation" target="_blank" rel="noopener noreferrer">project presentation</a> series.) Anyway, the point here is that having a consistent set of decision-making audience helps make sure patterns like these can be better discovered instead of overlooked.</p>
+            <h2>Accountability</h2>
+            <p>I&rsquo;ve touched on this previously in <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-30-no-blame-sev-culture#no-blame--no-responsibility" target="_blank" rel="noopener noreferrer">No Blame SEV (Incident) Culture</a>. Generally, there shouldn&rsquo;t be any explicit <em>blaming</em> happening in the incident review meeting but as I&rsquo;ve seen others put it, there could still be <em>&ldquo;shame&rdquo;</em>. The way I&rsquo;ve understood how a lot of this works is that the worse the outage was, the less likely the incident is to be entirely the responsibility of an individual. If you took down the <em>entire</em> production tier of your company, there are likely a lot of things that need to go wrong for it to happen, so it shouldn&rsquo;t all be on you.</p>
+            <p>Aside from all the &ldquo;who&rsquo;s wrong / who&rsquo;s to blame&rdquo; side of accountability, there&rsquo;s also the part where each responsible team needs to take on follow-up tasks to strengthen their end of reliability to prevent similar incidents from happening again. For example, if an internal framework or component library change breaks a bunch of stuff in the company, the most obvious thing would be for the framework/library team to improve their regression testing. But client teams might also want to consider adding stricter test coverage on critical paths so they can be more defensive and catch potential future breakages earlier.</p>
+            <h2>Wrap up</h2>
+            <p>The incident review process is a critical part of your team&rsquo;s long-term reliability. It can be daunting to those presenting their first incidents so a proper report template helps make sure you always have quality content for the review. From there, getting the right people in the room regularly and actually tracking follow-up work helps make sure you don&rsquo;t fall for the same problem again. Even if you aren&rsquo;t sure where to start, putting together a rough process can help kickstart it as you re-evaluate and refine it as it goes. The goal isn&rsquo;t to eliminate all incidents, but to make sure you&rsquo;re learning from them and getting stronger as a result.</p>
+        </div>
+        <hr />
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://www.nan.fyi/database" target="_blank" rel="noopener noreferrer">[Not a Number] Build Your Own Database</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
