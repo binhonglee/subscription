@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">FB accounts created without Messenger</h1>
+        <h2 style="text-align: center;">tfw you accidentally break FB for millions of new users</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/25-10-30.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>This was one of my first experience at causing a SEV. I&rsquo;ve broken production before 🫣 but not bad enough for it to be a SEV. In this situation, millions of new FB accounts were created (over the duration of the outage) without proper messaging inbox thus unable to use Messenger. I&rsquo;ll dive more into how this happens below.</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/project-presentation/" target="_blank" rel=”noopener noreferrer”>(Project Presentation)</a> where I share stories of my past projects.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2025-10-31-leaked-fakeincorrectpassword" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Background</h2>
+            <p>When a user tries to create a new account on FB, the system would actually first try to login with the provided credentials to see if it matches any existing account. If it matches, the user would be logged-in to their existing account instead of having a new account created. I added a new feature that make the login / matching system more complex which increases the success rate of it getting matched with an existing account (while maintaining the same low risk profile).</p>
+            <figure style="padding: 0; margin: 0;">
+                <img style="max-width: 100%;" src="https://binhong.me/blog/img/fb_account_without_messenger_1.png">
+                <figcaption style="text-align: center;">Simple diagram showing the new change</figcaption>
+            </figure>
+            <p>The problem however, was that the account creation process by itself was already a complex and lengthy process that takes a long time. So by adding extra processing to it (before account creation is even triggered), the entire process ended up taking so long that the request was timed-out and account creation process was halted halfway. This means accounts were created with bits-and-pieces missing, most notably it&rsquo;s messaging inbox.</p>
+            <h2>Discovery</h2>
+            <p>This was discovered by an engineer in the Messenger org. They started noticing new accounts without messaging inbox and thought it was weird but they didn&rsquo;t think too much of it. They just manually triggered a job to retroactively create it for those accounts. For the 2 weeks I ran my experiment (a/b test), they just ran the job manually for the subset of new users without a messaging inbox. But when I launch the experience (due to successful a/b test), things got a bit out of hand.</p>
+            <p>This engineer started seeing significantly (~20x) more new users daily being created without a messaging inbox so they filed a SEV. At some point, someone was able to pinpoint the angle change of their graph with my experiment launch. Seeing as my project directly affects the way account creation process works, it&rsquo;s very likely to be related, thus I got pulled in.</p>
+            <h2>Verification + Resolution</h2>
+            <p>I was initially skeptical at their reasoning around why these new accounts are missing the messaging inbox and thought there might be something else. But to prove it either way, I decided to pull the plug and unship the project to see if that solves the issue. <strong>It did.</strong> I was wrong but now we need to figure out (ideally) if there&rsquo;s a way to fix this while still shipping the project. We pulled in more help from people who better knows how new account creation works to see if there are other things broken (aside from inbox).</p>
+            <figure style="padding: 0; margin: 0;">
+                <img style="max-width: 100%;" src="https://binhong.me/blog/img/fb_account_without_messenger_2.png">
+                <figcaption style="text-align: center;">Simple diagram showing the fix</figcaption>
+            </figure>
+            <p>As far as we can tell, only inbox was affected by this. So we essentially moved messaging inbox creation to be triggered earlier (as one of the top-tier jobs to be ran in parallel). We re-tested it and see this fixes the issue for all but one or two interfaces (I think it was FBLite and maybe mWeb that still had issues). I actually kept the SEV in <code>Cleanup</code> state for a bit until we dropped it off as the team (technically just half the team which included me) had a prioritization shift moving away from growth to 0 -&gt; 1 so we just left it as is.</p>
+            <p><em>Eventually, the whole account creation flow was replaced anyway as part of the 0 -&gt; 1 effort to launch <a style="color: #1e681e;" href="https://about.fb.com/news/2022/09/accounts-center-facebook-and-instagram/"" target="_blank" rel="noopener noreferrer">the new unified experience</a>.</em></p>
+            <h2>Aftermath</h2>
+            <p>I was made the SEV owner (being the person who caused it) and filled out the SEV report. I don&rsquo;t remember too clearly how the review went anymore but I did know that I was really nervous throughout. I learnt a lot from the process and as far as I know, I was not penalized for it in my performance review seeing it wasn&rsquo;t exactly <em>my</em> failure that caused this (more on <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-30-no-blame-sev-culture/"" target="_blank" rel="noopener noreferrer">No Blame SEV Culture</a>).</p>
+            <h2>Takeaway</h2>
+            <p>The main takeaway here is that metric monitoring and analysis only goes so far in making sure things work. It generally doesn&rsquo;t cover things that are affected outside of your immediate team&rsquo;s scope. Secondly, even if skeptical, don&rsquo;t assume without proof. I was skeptical that my experiment was the rootcause but I&rsquo;m glad I committed to verifying it anyway (which proved myself wrong). Stressful at the time, but good learning experience overall.</p>
+        </div>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
