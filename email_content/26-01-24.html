@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #f0ede6;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">The Peak Bias</h1>
+        <h2 style="text-align: center;">Why Consistency Gets No Respect</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/26-01-24.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p><em>Note: Sorry for the month long hiatus. If you didn't know, I've been spending a lot of my time building <a style="color: #1e681e;" href="https://gitnav.xyz/" target="_blank" rel=”noopener noreferrer”>Git Navigator</a> and you should definitely check it out if you haven't already!</em></p>
+            <p>One of the most interesting examples is to look at any average person debating whether Jordan or LeBron is the GOAT. They will inevitably bring up Jordan&rsquo;s 6-0 finals record as if Jordan only played in the NBA for 6 years. LeBron&rsquo;s 4-8 record on the other hand is somehow worse than if he never made it to the finals at all (which frankly doesn&rsquo;t make sense lol). This isn&rsquo;t really about basketball though. It&rsquo;s about a fundamental bias in how humans evaluate performance where we disproportionately value peak moments over sustained consistency, even when the consistency represents equal or greater total value.</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/the-opinionated-engineer/" target="_blank" rel=”noopener noreferrer”>(The Opinionated Engineer)</a> where I
+                    share my strong opinions on engineering practices.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2026-01-25-the-peak-bias" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>One big project &gt; many small projects</h2>
+            <p>Similar to &ldquo;peaks&rdquo;, humans have a tendency to veer towards one &ldquo;big, complex&rdquo; project over a bunch of smaller projects even if they require the same level of effort and expertise. We&rsquo;ve all seen this happened one way or another. The person who ships one new flashy dev tool get rated as &ldquo;exceed expectations&rdquo; while the person who quietly shipped ten incremental performance improvements (that collectively saved more engineering time) gets a &ldquo;meets all expectations&rdquo;. A single monolithic launch gets remembered. Ten incremental wins that shipped over 6 months are just blurred together in everyone&rsquo;s memory by the time performance review season comes around.</p>
+            <h2>The invisible work trap</h2>
+            <p>This creates some really annoying incentives tbh. Nobody remembers the person who built great monitoring that prevented incidents (the incidents that never was) but everyone remembers the hero who stayed up fixing the 3am production fire (even if better testing infra could&rsquo;ve prevented it in the first place, <a style="color: #1e681e;" href="https://binhong.me/blog/2025-08-01-firefighting-heroes/" target="_blank" rel="noopener noreferrer">but we don&rsquo;t talk about that lol</a>). The reality is that sustained consistency is harder than occasional peaks. The person who shipped features with good code quality that never breaks in production through consistent diligence gets less credit than the person who firefights a handful of dramatic incidents (even if it might be due to their own lack of care towards shipping). Both require effort, but only one gets remembered as a &ldquo;peak&rdquo; moment during performance discussions.</p>
+            <h2>Storytelling as the workaround</h2>
+            <p>You&rsquo;ll hear this advice everywhere from performance review packages to design docs to business proposals. Literally any &ldquo;presentation&rdquo; type stuff will tell you that storytelling matters. Storytelling is basically the skill of bundling up all your smaller projects into one big narrative to combat this bias. Instead of &ldquo;shipped 10 performance improvements&rdquo; you write &ldquo;led reliability initiative that reduced P95 latency by 40% through systematic optimization.&rdquo; Same work, just packaged differently.</p>
+            <p>The uncomfortable truth is that impact without visibility might as well not exist come promo time. The people who are good at this don&rsquo;t just list what they shipped but create a whole story arc like &ldquo;Problem → Investigation → Solution → Impact → Future Work.&rdquo; They connect the dots to show how their smaller projects collectively solved something bigger. This used to feel really inauthentic to me (and honestly sometimes it still does) but it&rsquo;s a valuable skill to learn because making sure people understand what you did is part of the job. In my opinion, this is also the defining character between a <em>good</em> manager and a <em>great</em> manager.</p>
+            <h2>Hot take</h2>
+            <p>Here&rsquo;s the controversial part. I don&rsquo;t actually think this bias is completely irrational. Peak performance (when it&rsquo;s genuine) does signal important stuff. An engineer who can architect and ship a complex multi-team migration is demonstrating coordination and ambiguity navigation skills that not everyone has. These are real senior+ skills that are hard to show through smaller projects. The problem isn&rsquo;t that we value peaks but that we <em>overvalue</em> them relative to consistency. We&rsquo;re also terrible at telling the difference between genuine peak performance and just being in the right place at the right time (or being good at taking credit for other people&rsquo;s work lol). Sometimes the person grinding out consistent wins is actually showing way more skill, just in a less visible way.</p>
+            <h2>What to actually do about it</h2>
+            <p>If you&rsquo;re someone who tends toward consistent, incremental work (which is totally valid and valuable btw), here&rsquo;s the reality. You need to adapt your strategy if you want recognition. The most effective move? Take on longer running projects. If you know you can consistently ship quality work, use that as a strength by committing to bigger initiatives that span months instead of weeks. Fortunately, a big long-running project basically counts as a &ldquo;peak&rdquo; in terms of how it gets perceived and remembered.</p>
+            <p>The key is you&rsquo;re not actually changing your working style since you&rsquo;re still executing with the same consistency. You&rsquo;re just changing scope. Instead of 10 small improvements over 6 months, you&rsquo;re doing a 6-month initiative that involves 10 components. Same work, same consistency, different packaging. Other stuff that helps include actively communicate about your progress (shameless plug for <a style="color: #1e681e;" href="https://binhong.me/blog/2025-05-16-art-of-posting/" target="_blank" rel="noopener noreferrer">my previous piece on this</a>), bundling your incremental work into themes in perf reviews, and actually quantifying cumulative impact across related projects. You&rsquo;re not trying to trick people into thinking your work is more valuable than it is but making sure they understand the actual value of work that&rsquo;s easy to overlook (which sometimes means restructuring how you take on work in the first place).</p>
+            <h2>But I kinda just do whatever</h2>
+            <p>Some people are &ldquo;utility players&rdquo; who pick up whatever project with the highest priority at the time. Usually there isn&rsquo;t too much &ldquo;narrative&rdquo; surrounding &ldquo;why do x&rdquo; aside from some vague definition of it being the most urgent work at the time. In this case, you&rsquo;d rely heavily on documentations and endorsements by the more senior / authoritative voices in the company to make your case. This sometimes also mean that having a <em>great</em> manager is more important (than otherwise) when it comes to building your case for performance review. The <em>safe</em> way is to pick a &ldquo;theme&rdquo; and be more intentional about the projects you commit to. Going without is viable but harder, since you rely heavily on others to build your narrative for you.</p>
+            <h2>Wrap up</h2>
+            <p>The peak bias is real and it affects everything from sports debates to software engineering careers. We remember the dramatic moments and forget sustained excellence where the person who shipped one big project gets promoted over the person who shipped ten valuable smaller ones. You can&rsquo;t fight human psychology but you can work with it. If you&rsquo;re the consistent incremental type, consider taking on longer projects that let you leverage that consistency at scale.</p>
+        </div>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
