@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        html {
+            background-color: #ffffff;
+        }
+
+        .button:hover {
+            border-width: 2px;
+        }
+    </style>
+    <body style="background-color: #f0ede6; color: #181a18; padding: 20px; max-width: 600px; margin: auto;">
+        <h1 style="text-align: center;">Quick Fix for a Dangerous Session Pattern</h1>
+        <h2 style="text-align: center;">Preventing potential privacy leaks before they happen</h2>
+        <a style="text-align: center; font-size: small; color: #808080; width: 100%; display: block;" href="https://binhong.me/newsletter/past_emails/26-04-23.html" target="_blank" rel=”noopener noreferrer”>Open this email in web</a>
+        <div class="post_content">
+            <p>With <a style="color: #1e681e;" href="https://about.fb.com/news/2026/04/meta-account/" target="_blank" rel=”noopener noreferrer”>the recent announcement of Meta Account</a>, I wanted to share a small incident on how I helped mitigate one of the more glaring privacy issues that came up during development. As you might know, this is a brand new account type (different from the existing one), so internally there&rsquo;s a simple function (something like <code>session.isNewAccountType()</code>) attached to your session for easy reference when needed, like showing different UI for different account types. But what about before you log in?</p>
+            <p>
+                <em>
+                    This is part of a series <a style="color: #1e681e;" href="https://binhong.me/blog/project-presentation/" target="_blank" rel=”noopener noreferrer”>(Project Presentation)</a> where I share stories of my past projects.
+                </em>
+            </p>
+            <a style="text-decoration: none;" href="https://binhong.me/blog/2026-04-24-quick-fix-for-dangerous-session-pattern/" target="_blank" rel="noopener noreferrer"><div class="button" style="border-radius: 12px; border: solid; border-width: 1px; color: #808080; padding: 12px 20px; text-align: center; text-decoration: none;">Read article in blog instead</div></a>
+            <h2>Background</h2>
+            <p>One random afternoon, the tech lead on the login team came to me (mainly because I was like the only other person in the office) and asked, &ldquo;Isn&rsquo;t it a bad practice to use this function <code>genSession_DO_NOT_USE_DANGEROUSLY_IMPERSONATE()</code>?&rdquo; And I was like, &ldquo;Uh yeah, that&rsquo;s why it&rsquo;s named that way.&rdquo; We asked the PR author why they decided to do this. Turns out, the team that built the <code>session.isNewAccountType()</code> function didn&rsquo;t build one for a logged-out session, so the only way to do the check is by creating a session impersonating that user, then calling it.</p>
+            <p>Something like this:</p>
+            <pre style="overflow-x: auto; background-color: #ffffff; border-radius: 8px; padding: 0 12px"><code>
+session = await genSession_DO_NOT_USE_DANGEROUSLY_IMPERSONATE(uid)
+if (session.isNewAccountType()) {
+  /* logic for new account type */
+}
+            </code></pre>
+            <p><em>Note: Function names are slightly altered and I&rsquo;m using JS instead of Hack for readability purposes, but it should be obvious what I&rsquo;m referring to if you&rsquo;ve worked on any product space in Meta (especially FB).</em></p>
+            <p>This is a pretty dangerous pattern since you&rsquo;re leaving a dangerous <code>session</code> variable everywhere in the code that can be accidentally misused for other things, which could end up leaking privacy-sensitive information (since it&rsquo;s basically impersonating as if the user is logged in). Even if it&rsquo;s inlined, it could be unknowingly refactored in the future by people or bots (or AI) and has the same abuse problem.</p>
+            <h2>Reaching out</h2>
+            <p>After figuring out the right owners, we set up a group chat with their team to understand why they decided to do this (or if it was just an oversight) and what level of effort they thought would be required to make this work. To my surprise, they didn&rsquo;t think this was a bad practice at all, so they opted to keep it the way it was. We scheduled a meeting to raise our concerns and align on what could or should be done here. During the meeting, they cited that a logged-out friendly version would take their team around 3 engineering weeks to build, which frankly was time they didn&rsquo;t have.</p>
+            <h2>Discovery</h2>
+            <p>While I did join the meeting, I left most of the talking and discussing up to the tech lead and others. I focused mostly on digging into their codebase to understand how it works and why it would take 3 weeks to build (since it <em>looks</em> like it should be straightforward). I learned that the session infra is pretty convoluted (for good reason). Mainly because everything in there needs to support not just FB but also other Meta apps like IG, VR, etc. (and all their ID types). There&rsquo;s also a bunch of different abstraction layers for stuff that needs to be supported for different combinations of apps. That said, I was able to get a prototype working for FB (in limited use cases) by the end of the meeting, so I thought maybe I could build this myself in less than the aforementioned 3 weeks.</p>
+            <p><em>Side note: I was between projects at the time (due to some project reprioritization) and would be going on leave for a whole month (recharge) in about 2 weeks, my manager and I decided not to start any new projects until after I returned. Since I had some free time with nothing scheduled on my timeline, I decided to take a poke at this problem myself.</em></p>
+            <h2>Building the fix</h2>
+            <p>After the meeting ended, I showed my prototype to the few people in the meeting room. I told them I&rsquo;d continue to work on it and see where it goes. Anyway, about 3 or 4 days later, I got the thing working, but there were still a few things that needed cleanup. One major issue was some access token stuff that I had just randomly picked an existing token for my testing. I went back to the group chat with my working example and asked for recommendations on how to go about the access token issue. They commented on the PR and gave me some pointers on creating a new access token with limited permissions (to be used only for this purpose). After some trial and error and back-and-forth, I got a fully working fix!</p>
+            <h2>Mitigated</h2>
+            <p>At this point, it had been around 1.5 weeks since the discussion on this issue started. After getting the PR approved and shipping it, the call becomes significantly cleaner and no longer bears the risk of using an impersonation session. Thereafter, I made an announcement post and specifically made sure to call this out to all the teams working in the logged-out space.</p>
+            <p>The eventual version looks something like this:</p>
+            <pre style="overflow-x: auto; background-color: #ffffff; border-radius: 8px; padding: 0 12px"><code>
+session = await genLoggedOutSession()
+if (session.isNewAccountType(uid)) {
+  /* logic for new account type */
+}
+            </code></pre>
+            <h2>Takeaway</h2>
+            <p>Scary function names are there for a reason and we should definitely avoid using them whenever possible. That said, I had great peers who were able to take on the alignment discussions (especially during the meeting), which allowed me to focus on diving into their codebase during the meeting to better understand the work and complexity being discussed. I think this is probably an example of <em>code wins argument</em>, though admittedly, having free bandwidth definitely helped. While we disagreed with the owning team&rsquo;s assessment (that the original version was an acceptable practice), we didn&rsquo;t push to argue who was right since it didn&rsquo;t seem fruitful. Instead, we focused on aligning to get the right fix out. After all, the goal isn&rsquo;t to win arguments but to mitigate the potential privacy risk.</p>
+        </div>
+        <h1 style="text-align: center;">Interesting reads</h1>
+        <p><a style="color: #1e681e;" href="https://shub.club/writings/2026/april/who-are-these-ides-for/" target="_blank" rel="noopener noreferrer">[Shubham Naik] Are we building IDEs for engineers anymore?</a></p>
+        <p><a style="color: #1e681e;" href="https://lwn.net/Articles/1057561/" target="_blank" rel="noopener noreferrer">[Joe Brockmeier] Evolving Git for the next decade</a></p>
+        <hr />
+        <p>
+            <a style="color: #1e681e;" href="https://binhong.me/newsletter/unsubscribe/{#KEY}" target="_blank" rel="noopener noreferrer">Unsubscribe</a>
+        </p>
+    </body>
+</html>
